@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.provider.Settings
 import com.blankj.utilcode.util.Utils
-import java.util.*
+import java.util.Locale
 import kotlin.math.max
 
 /**

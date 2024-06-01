@@ -17,7 +17,8 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import timber.log.Timber
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 object AppTextUtils {
 

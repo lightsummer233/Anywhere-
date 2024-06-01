@@ -4,7 +4,12 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -12,7 +17,11 @@ import com.absinthe.anywhere_.R
 import com.absinthe.anywhere_.constants.Const
 import com.absinthe.anywhere_.constants.GlobalValues
 import com.absinthe.anywhere_.constants.OnceTag
-import com.absinthe.anywhere_.databinding.*
+import com.absinthe.anywhere_.databinding.CardAcquireOverlayPermissionBinding
+import com.absinthe.anywhere_.databinding.CardAcquirePopupPermissionBinding
+import com.absinthe.anywhere_.databinding.CardAcquireRootPermissionBinding
+import com.absinthe.anywhere_.databinding.CardAcquireShizukuPermissionBinding
+import com.absinthe.anywhere_.databinding.FragmentInitializeBinding
 import com.absinthe.anywhere_.ui.main.MainActivity
 import com.absinthe.anywhere_.utils.AppUtils
 import com.absinthe.anywhere_.utils.ToastUtil

@@ -60,7 +60,7 @@ object NotifyUtils {
         .setOngoing(true)
         .setAutoCancel(false)
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-        param.setCategory(Notification.CATEGORY_NAVIGATION);
+        param.setCategory(Notification.CATEGORY_NAVIGATION)
       }
       context.startForeground(COLLECTOR_NOTIFICATION_ID, param.build())
     }

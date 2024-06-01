@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.absinthe.anywhere_.R
-import com.absinthe.libchecker.view.AViewGroup
+import com.absinthe.anywhere_.view.AViewGroup
 
 class ToastView(context: Context) : AViewGroup(context) {
 
   val message = AppCompatTextView(context).apply {
-    layoutParams =
-      LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    layoutParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     maxWidth = 300.dp
     gravity = Gravity.CENTER
     setTextAppearance(android.R.style.TextAppearance_Material_Body2)

@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+
 import com.flask.colorpicker.builder.ColorWheelRendererBuilder;
 import com.flask.colorpicker.builder.PaintBuilder;
 import com.flask.colorpicker.renderer.ColorWheelRenderOption;
@@ -40,7 +42,7 @@ public class ColorPickerView extends View {
 	private float alpha = 1;
 	private int backgroundColor = 0x00000000;
 
-	private Integer initialColors[] = new Integer[]{null, null, null, null, null};
+	private Integer[] initialColors = new Integer[]{null, null, null, null, null};
 	private int colorSelection = 0;
 	private Integer initialColor;
 	private Integer pickerColorEditTextColor;
@@ -97,7 +99,6 @@ public class ColorPickerView extends View {
 		initWith(context, attrs);
 	}
 
-	@TargetApi(21)
 	public ColorPickerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 		super(context, attrs, defStyleAttr, defStyleRes);
 		initWith(context, attrs);
@@ -136,9 +137,9 @@ public class ColorPickerView extends View {
 		super.onLayout(changed, left, top, right, bottom);
 
 		if (alphaSliderViewId != 0)
-			setAlphaSlider((AlphaSlider) getRootView().findViewById(alphaSliderViewId));
+			setAlphaSlider(getRootView().findViewById(alphaSliderViewId));
 		if (lightnessSliderViewId != 0)
-			setLightnessSlider((LightnessSlider) getRootView().findViewById(lightnessSliderViewId));
+			setLightnessSlider(getRootView().findViewById(lightnessSliderViewId));
 
 		updateColorWheel();
 		currentColorCircle = findNearestByColor(initialColor);
@@ -215,9 +216,7 @@ public class ColorPickerView extends View {
 			height = MeasureSpec.getSize(heightMeasureSpec);
 		else if (heightMode == MeasureSpec.EXACTLY)
 			height = MeasureSpec.getSize(heightMeasureSpec);
-		int squareDimen = width;
-		if (height < width)
-			squareDimen = height;
+    int squareDimen = Math.min(height, width);
 		setMeasuredDimension(squareDimen, squareDimen);
 	}
 
@@ -272,11 +271,11 @@ public class ColorPickerView extends View {
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas) {
+	protected void onDraw(@NonNull Canvas canvas) {
 		super.onDraw(canvas);
 		canvas.drawColor(backgroundColor);
 
-		float maxRadius = canvas.getWidth() / (1f + ColorWheelRenderer.GAP_PERCENTAGE);
+		float maxRadius = getWidth() / (1f + ColorWheelRenderer.GAP_PERCENTAGE);
 		float size = maxRadius / density / 2;
 		if (colorWheel != null && currentColorCircle != null) {
 			colorWheelFill.setColor(Color.HSVToColor(currentColorCircle.getHsvWithLightness(this.lightness)));
@@ -477,20 +476,17 @@ public class ColorPickerView extends View {
 			if (i == selectedColor) {
 				childLayout.setBackgroundColor(Color.WHITE);
 			}
-			ImageView childImage = (ImageView) childLayout.findViewById(R.id.image_preview);
+			ImageView childImage = childLayout.findViewById(R.id.image_preview);
 			childImage.setClickable(true);
 			childImage.setTag(i);
-			childImage.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if (v == null)
-						return;
-					Object tag = v.getTag();
-					if (tag == null || !(tag instanceof Integer))
-						return;
-					setSelectedColor((int) tag);
-				}
-			});
+			childImage.setOnClickListener(v -> {
+        if (v == null)
+          return;
+        Object tag = v.getTag();
+        if (tag == null || !(tag instanceof Integer))
+          return;
+        setSelectedColor((int) tag);
+      });
 		}
 	}
 
@@ -539,7 +535,7 @@ public class ColorPickerView extends View {
 		if (!(childView instanceof LinearLayout))
 			return;
 		LinearLayout childLayout = (LinearLayout) childView;
-		ImageView childImage = (ImageView) childLayout.findViewById(R.id.image_preview);
+		ImageView childImage = childLayout.findViewById(R.id.image_preview);
 		childImage.setImageDrawable(new ColorCircleDrawable(newColor));
 	}
 

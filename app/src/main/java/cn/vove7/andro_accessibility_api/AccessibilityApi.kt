@@ -1,7 +1,6 @@
 package cn.vove7.andro_accessibility_api
 
 import android.accessibilityservice.AccessibilityService
-import android.os.Build
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
@@ -62,15 +61,12 @@ abstract class AccessibilityApi : AccessibilityService(), BaseServiceApi {
 
   //适应 多窗口 分屏
   val rootNodeOfAllWindows
-    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    get() =
       ViewNode.withChildren(
         windows?.mapNotNull {
           it.root?.let { r -> ViewNode(r) }
         } ?: emptyList()
       )
-    } else {
-      rootViewNode ?: ViewNode.withChildren(emptyList())
-    }
 
   val rootInWindow: AccessibilityNodeInfo?
     get() {

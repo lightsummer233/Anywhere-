@@ -28,7 +28,7 @@ object ShizukuProcess {
       var len: Int = inputStream.read(buf)
 
       while (len > 0) {
-        sb.append(buf, 0, len)
+        sb.appendRange(buf, 0, len)
         len = inputStream.read(buf)
       }
       inputStream.close()

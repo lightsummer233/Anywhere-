@@ -13,7 +13,12 @@ import com.absinthe.anywhere_.model.database.PageEntity
 import com.absinthe.anywhere_.utils.manager.URLManager
 import com.google.gson.Gson
 import com.thegrizzlylabs.sardineandroid.impl.OkHttpSardine
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 object StorageUtils {
@@ -112,6 +117,7 @@ object StorageUtils {
     }
   }
 
+  @OptIn(DelicateCoroutinesApi::class)
   fun webdavBackup() {
     GlobalScope.launch(Dispatchers.IO) {
       val sardine = OkHttpSardine()
@@ -125,8 +131,7 @@ object StorageUtils {
           delay(300)
         }
 
-        val backupName =
-          "Anywhere-Backups-${AppTextUtils.webDavFormatDate}-${BuildConfig.VERSION_NAME}.awbackups"
+        val backupName = "Anywhere-Backups-${AppTextUtils.webDavFormatDate}-${BuildConfig.VERSION_NAME}.awbackups"
 
         exportAnywhereEntityJsonString()?.let { content ->
           CipherUtils.encrypt(content)?.let { encrypted ->

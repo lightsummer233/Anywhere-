@@ -3,7 +3,11 @@ package com.absinthe.anywhere_.view.home
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.view.*
+import android.view.HapticFeedbackConstants
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewConfiguration
+import android.view.WindowManager
 import android.widget.LinearLayout
 import com.absinthe.anywhere_.constants.Const
 import com.absinthe.anywhere_.model.database.AnywhereEntity

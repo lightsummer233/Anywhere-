@@ -13,7 +13,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
-import android.view.*
+import android.view.HapticFeedbackConstants
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.Window
 import android.widget.ImageButton
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,8 +46,12 @@ import com.absinthe.anywhere_.adapter.manager.WrapContentLinearLayoutManager
 import com.absinthe.anywhere_.adapter.page.PageListAdapter
 import com.absinthe.anywhere_.adapter.page.PageTitleNode
 import com.absinthe.anywhere_.adapter.page.PageTitleProvider
-import com.absinthe.anywhere_.constants.*
+import com.absinthe.anywhere_.constants.AnywhereType
+import com.absinthe.anywhere_.constants.Const
+import com.absinthe.anywhere_.constants.EventTag
+import com.absinthe.anywhere_.constants.GlobalValues
 import com.absinthe.anywhere_.constants.GlobalValues.setsCategory
+import com.absinthe.anywhere_.constants.OnceTag
 import com.absinthe.anywhere_.databinding.ActivityMainBinding
 import com.absinthe.anywhere_.model.database.AnywhereEntity
 import com.absinthe.anywhere_.model.database.PageEntity
@@ -60,10 +68,14 @@ import com.absinthe.anywhere_.ui.settings.SettingsActivity
 import com.absinthe.anywhere_.ui.setup.SetupActivity
 import com.absinthe.anywhere_.ui.shortcuts.ShortcutsActivity
 import com.absinthe.anywhere_.ui.shortcuts.ThirdAppsShortcutActivity
-import com.absinthe.anywhere_.utils.*
+import com.absinthe.anywhere_.utils.AppTextUtils
 import com.absinthe.anywhere_.utils.CipherUtils.decrypt
+import com.absinthe.anywhere_.utils.ClipboardUtil
 import com.absinthe.anywhere_.utils.ClipboardUtil.clearClipboard
 import com.absinthe.anywhere_.utils.ClipboardUtil.getClipBoardText
+import com.absinthe.anywhere_.utils.ToastUtil
+import com.absinthe.anywhere_.utils.UxUtils
+import com.absinthe.anywhere_.utils.doOnMainThreadIdle
 import com.absinthe.anywhere_.utils.handler.Opener
 import com.absinthe.anywhere_.utils.manager.CardTypeIconGenerator
 import com.absinthe.anywhere_.utils.manager.DialogManager.showAdvancedCardSelectDialog
@@ -262,6 +274,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
   }
 
   override fun onBackPressed() {
+    super.onBackPressed()
     when {
       binding.drawer.isDrawerVisible(GravityCompat.START) -> {
         binding.drawer.closeDrawer(GravityCompat.START)
@@ -594,34 +607,38 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     val action = intent.action
     Timber.d("action = %s", action)
 
-    if (action == null || action == Intent.ACTION_VIEW) {
-      intent.data?.let {
-        Timber.d("Received Url = %s", it.toString())
-        Timber.d("Received path = %s", it.path)
-        processUri(it)
-      }
-    } else if (action == Intent.ACTION_SEND) {
-      val sharing = intent.getStringExtra(Intent.EXTRA_TEXT)
-      viewModel.setUpUrlScheme(this, AppTextUtils.parseUrlFromSharingText(sharing))
-    } else if (action == ShortcutsActivity.ACTION_START_DEVICE_CONTROL) {
-      val type = intent.getIntExtra(Const.INTENT_EXTRA_TYPE, -1)
-      val param1 = intent.getStringExtra(Const.INTENT_EXTRA_PARAM_1) ?: return
-      val param2 = intent.getStringExtra(Const.INTENT_EXTRA_PARAM_2) ?: return
-      val param3 = intent.getStringExtra(Const.INTENT_EXTRA_PARAM_3) ?: return
-      val entity = AnywhereEntity().apply {
-        this.type = type
-        this.param1 = param1
-        this.param2 = param2
-        this.param3 = param3
-      }
-      Opener.with(this)
-        .load(entity)
-        .setOpenedListener(object : Opener.OnOpenListener {
-          override fun onOpened() {
-            shouldFinish = true
+    when (action) {
+        null, Intent.ACTION_VIEW -> {
+          intent.data?.let {
+            Timber.d("Received Url = %s", it.toString())
+            Timber.d("Received path = %s", it.path)
+            processUri(it)
           }
-        })
-        .open()
+        }
+        Intent.ACTION_SEND -> {
+          val sharing = intent.getStringExtra(Intent.EXTRA_TEXT)
+          viewModel.setUpUrlScheme(this, AppTextUtils.parseUrlFromSharingText(sharing))
+        }
+        ShortcutsActivity.ACTION_START_DEVICE_CONTROL -> {
+          val type = intent.getIntExtra(Const.INTENT_EXTRA_TYPE, -1)
+          val param1 = intent.getStringExtra(Const.INTENT_EXTRA_PARAM_1) ?: return
+          val param2 = intent.getStringExtra(Const.INTENT_EXTRA_PARAM_2) ?: return
+          val param3 = intent.getStringExtra(Const.INTENT_EXTRA_PARAM_3) ?: return
+          val entity = AnywhereEntity().apply {
+            this.type = type
+            this.param1 = param1
+            this.param2 = param2
+            this.param3 = param3
+          }
+          Opener.with(this)
+            .load(entity)
+            .setOpenedListener(object : Opener.OnOpenListener {
+              override fun onOpened() {
+                shouldFinish = true
+              }
+            })
+            .open()
+        }
     }
   }
 

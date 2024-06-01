@@ -53,7 +53,7 @@ class ViewFinderWithMultiCondition(node: ViewNode? = null) : ViewFinder(node) {
    * @param depths Array<Int>
    * @return ViewNode?
    */
-  fun findByDepths(): ViewNode? {
+  private fun findByDepths(): ViewNode? {
     var p: ViewNode? = startNode
 
     depths.forEach {
@@ -66,13 +66,10 @@ class ViewFinderWithMultiCondition(node: ViewNode? = null) : ViewFinder(node) {
         return null
       }
     }
-    if (p == null) {
-      return null
-    }
 
     val pp = p!!
     return if (typeNames.isNotEmpty()) {
-      if ("${pp.className}".contains(typeNames[0], ignoreCase = true))
+      if (pp.className.contains(typeNames[0], ignoreCase = true))
         pp
       else {
         null
@@ -89,7 +86,7 @@ class ViewFinderWithMultiCondition(node: ViewNode? = null) : ViewFinder(node) {
    */
   override fun findCondition(node: AccessibilityNodeInfo): Boolean {
     //could not remove "$.." prevent cause null
-    val vid = "${node.viewIdResourceName}"
+    val vid = node.viewIdResourceName
     if (viewId != null) {
       if (!vid.endsWith("/$viewId") && vid != viewId)
       // :id/view_id) //网页视图 id : id
@@ -167,7 +164,7 @@ class ViewFinderWithMultiCondition(node: ViewNode? = null) : ViewFinder(node) {
         it.equals(text, ignoreCase = true)
       },
       TEXT_MATCH_MODE_CONTAIN to { it: String, text: String ->
-        text != null && text.contains(it, ignoreCase = true)
+        text.contains(it, ignoreCase = true)
       },
       TEXT_MATCH_MODE_REGEX to { it: String, text: String ->
         it.toRegex().matches(text)

@@ -20,7 +20,7 @@ class SetupActivity : AppBarActivity<ActivitySetupBinding>() {
       .beginTransaction()
       .setCustomAnimations(R.anim.anim_fade_in, R.anim.anim_fade_out)
       .replace(binding.fragmentContainerView.id, WelcomeFragment.newInstance())
-      .commitNow()
+      .commit()
   }
 
   override fun initView() {

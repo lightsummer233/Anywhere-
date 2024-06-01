@@ -18,8 +18,8 @@ class ScreenTextFinder(startNode: ViewNode? = null) : ViewFinder(startNode) {
       isWeb = true
       return false
     }
-    return node.childCount == 0 && (node.text != null && node.text.trim() != "")
-      || (isWeb && node.contentDescription ?: "" != "")
+    return (node.childCount == 0 && (node.text != null && node.text.trim() != "")
+      || (isWeb && (node.contentDescription ?: "") != ""))
   }
 
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatImageView
 import com.absinthe.anywhere_.R
-import com.absinthe.libchecker.view.AViewGroup
+import com.absinthe.anywhere_.view.AViewGroup
 import timber.log.Timber
 
 class CoordinatorView(context: Context) : AViewGroup(context) {

@@ -8,35 +8,35 @@
   <item
     android:id="@+id/toolbar_sort"
     android:icon="@drawable/ic_filter_list"
-    android:title="@string/menu_sort"
-    app:showAsAction="always" />
+      android:showAsAction="always"
+      android:title="@string/menu_sort" />
 
   <item
     android:id="@+id/toolbar_settings"
     android:icon="@drawable/ic_settings_outline"
-    android:title="@string/menu_settings"
-    app:showAsAction="always" />
+      android:showAsAction="always"
+      android:title="@string/menu_settings" />
 
   <item
     android:id="@+id/toolbar_delete"
     android:icon="@drawable/ic_delete_toolbar"
-    android:title="@string/menu_delete"
-    android:visible="false"
-    app:showAsAction="always" />
+      android:showAsAction="always"
+      android:title="@string/menu_delete"
+      android:visible="false" />
 
   <item
     android:id="@+id/toolbar_move"
     android:icon="@drawable/ic_move"
-    android:title="@string/menu_move_to_page"
-    android:visible="false"
-    app:showAsAction="always" />
+      android:showAsAction="always"
+      android:title="@string/menu_move_to_page"
+      android:visible="false" />
 
   <item
     android:id="@+id/toolbar_create_sc"
     android:icon="@drawable/ic_add_home_shortcuts"
-    android:title="@string/dialog_add_home_shortcut_title"
-    android:visible="false"
-    app:showAsAction="always" />
+      android:showAsAction="always"
+      android:title="@string/dialog_add_home_shortcut_title"
+      android:visible="false" />
 
   <item
     android:id="@+id/toolbar_done"

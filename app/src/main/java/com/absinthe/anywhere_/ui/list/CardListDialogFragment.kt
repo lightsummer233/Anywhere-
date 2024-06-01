@@ -14,7 +14,6 @@ import com.absinthe.anywhere_.view.app.AnywhereDialogBuilder
 import com.absinthe.anywhere_.view.app.AnywhereDialogFragment
 import com.absinthe.anywhere_.viewbuilder.entity.CardListDialogBuilder
 import com.absinthe.libraries.utils.extensions.dp
-import java.util.*
 
 class CardListDialogFragment : AnywhereDialogFragment() {
 
@@ -59,44 +58,45 @@ class CardListDialogFragment : AnywhereDialogFragment() {
           )
         )
         for (ae in it) {
-          if (ae.type == AnywhereType.Card.URL_SCHEME
-            || ae.type == AnywhereType.Card.IMAGE
-            || ae.type == AnywhereType.Card.SHELL
-          ) {
-            listBeans.add(
-              AppListBean(
-                id = ae.id,
-                appName = ae.appName,
-                packageName = ae.param2.orEmpty(),
-                className = ae.param1,
-                icon = UxUtils.getAppIcon(requireContext(), ae.param2.orEmpty())
-                  ?: CardTypeIconGenerator.getAdvancedIcon(requireContext(), ae.type, 45.dp),
-                type = ae.type
-              )
-            )
-          } else if (ae.type == AnywhereType.Card.ACCESSIBILITY || ae.type == AnywhereType.Card.WORKFLOW) {
-            listBeans.add(
-              AppListBean(
-                id = ae.id,
-                appName = ae.appName,
-                packageName = ae.param2.orEmpty(),
-                className = ae.description.orEmpty(),
-                icon = CardTypeIconGenerator.getAdvancedIcon(requireContext(), ae.type, 45.dp),
-                type = ae.type
-              )
-            )
-          } else {
-            listBeans.add(
-              AppListBean(
-                id = ae.id,
-                appName = ae.appName,
-                packageName = ae.param1,
-                className = ae.param2.orEmpty(),
-                icon = UxUtils.getAppIcon(requireContext(), ae.param1)
-                  ?: CardTypeIconGenerator.getAdvancedIcon(requireContext(), ae.type, 45.dp),
-                type = ae.type
-              )
-            )
+          when (ae.type) {
+              AnywhereType.Card.URL_SCHEME, AnywhereType.Card.IMAGE, AnywhereType.Card.SHELL -> {
+                  listBeans.add(
+                    AppListBean(
+                      id = ae.id,
+                      appName = ae.appName,
+                      packageName = ae.param2.orEmpty(),
+                      className = ae.param1,
+                      icon = UxUtils.getAppIcon(requireContext(), ae.param2.orEmpty())
+                        ?: CardTypeIconGenerator.getAdvancedIcon(requireContext(), ae.type, 45.dp),
+                      type = ae.type
+                    )
+                  )
+              }
+              AnywhereType.Card.ACCESSIBILITY, AnywhereType.Card.WORKFLOW -> {
+                  listBeans.add(
+                    AppListBean(
+                      id = ae.id,
+                      appName = ae.appName,
+                      packageName = ae.param2.orEmpty(),
+                      className = ae.description.orEmpty(),
+                      icon = CardTypeIconGenerator.getAdvancedIcon(requireContext(), ae.type, 45.dp),
+                      type = ae.type
+                    )
+                  )
+              }
+              else -> {
+                  listBeans.add(
+                    AppListBean(
+                      id = ae.id,
+                      appName = ae.appName,
+                      packageName = ae.param1,
+                      className = ae.param2.orEmpty(),
+                      icon = UxUtils.getAppIcon(requireContext(), ae.param1)
+                        ?: CardTypeIconGenerator.getAdvancedIcon(requireContext(), ae.type, 45.dp),
+                      type = ae.type
+                    )
+                  )
+              }
           }
         }
         mBuilder.mAdapter.apply {

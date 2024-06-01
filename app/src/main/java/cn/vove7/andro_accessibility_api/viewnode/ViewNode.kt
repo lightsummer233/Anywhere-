@@ -156,19 +156,11 @@ class ViewNode(val node: AccessibilityNodeInfo) : ViewOperation, Comparable<View
   }
 
   override fun scrollUp(): Boolean {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_UP.id)
-    } else {
-      false
-    }
+    return node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_UP.id)
   }
 
   override fun scrollDown(): Boolean {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_DOWN.id)
-    } else {
-      false
-    }
+    return node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_DOWN.id)
   }
 
   override fun scrollForward(): Boolean {
@@ -180,19 +172,11 @@ class ViewNode(val node: AccessibilityNodeInfo) : ViewOperation, Comparable<View
   }
 
   override fun scrollLeft(): Boolean {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_LEFT.id)
-    } else {
-      false
-    }
+    return node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_LEFT.id)
   }
 
   override fun scrollRight(): Boolean {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_RIGHT.id)
-    } else {
-      false
-    }
+    return node.performAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_RIGHT.id)
   }
 
   override var text: CharSequence?
@@ -286,7 +270,7 @@ class ViewNode(val node: AccessibilityNodeInfo) : ViewOperation, Comparable<View
 
   val className get() = classType
 
-  val classType: String?
+  val classType: String
     get() = node.className.let { it.substring(it.lastIndexOf('.') + 1) }
 
 
@@ -332,7 +316,7 @@ class ViewNode(val node: AccessibilityNodeInfo) : ViewOperation, Comparable<View
   }
 
   override fun refresh(): Boolean {
-    if (className?.startsWith(ROOT_TAG) == true) {
+    if (className.startsWith(ROOT_TAG)) {
       childrenCache = null
     }
     return node.refresh()

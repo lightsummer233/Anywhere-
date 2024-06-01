@@ -2,8 +2,14 @@ package com.absinthe.anywhere_.view.home
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.ViewGroup
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setMargins
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
+import com.absinthe.libraries.utils.extensions.dp
 import com.absinthe.libraries.utils.extensions.dpToDimensionPixelSize
 import com.leinardi.android.speeddial.FabWithLabelView
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -23,9 +29,17 @@ class MySpeedDialView : SpeedDialView {
     // @see https://github.com/material-components/material-components-android/issues/2617
     mainFab.apply {
       updateLayoutParams<MarginLayoutParams> {
-        setMargins(context.dpToDimensionPixelSize(16))
+        setMargins(0)
       }
-      useCompatPadding = false
+      useCompatPadding = true
+    }
+    ViewCompat.setOnApplyWindowInsetsListener(mainFab) { v, insets ->
+      val inset = Insets.max(
+        insets.getInsets(WindowInsetsCompat.Type.systemBars()),
+        insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+      )
+      updatePadding(bottom = inset.bottom)
+      return@setOnApplyWindowInsetsListener insets
     }
   }
 
@@ -35,13 +49,7 @@ class MySpeedDialView : SpeedDialView {
     animate: Boolean
   ): FabWithLabelView? {
     return super.addActionItem(actionItem, position, animate)?.apply {
-      fab.apply {
-        updateLayoutParams<MarginLayoutParams> {
-          val horizontalMargin = context.dpToDimensionPixelSize(20)
-          setMargins(horizontalMargin, 0, horizontalMargin, 0)
-        }
-        useCompatPadding = false
-      }
+      fab.useCompatPadding = true
     }
   }
 }

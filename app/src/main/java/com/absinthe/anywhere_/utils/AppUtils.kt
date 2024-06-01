@@ -9,7 +9,12 @@ import android.content.UriPermission
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.os.MessageQueue
+import android.os.Parcelable
+import android.os.Process
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -132,6 +137,7 @@ object AppUtils {
    * @param showSystem     true if show system apps
    * @return apps list
    */
+  @SuppressLint("QueryPermissionsNeeded")
   fun getAppList(packageManager: PackageManager, showSystem: Boolean): List<AppListBean> {
     val list: MutableList<AppListBean> = ArrayList()
     try {
@@ -505,10 +511,6 @@ fun doOnMainThreadIdle(action: () -> Unit, timeout: Long? = null) {
   if (Looper.getMainLooper() == Looper.myLooper()) {
     setupIdleHandler(Looper.myQueue())
   } else {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      setupIdleHandler(Looper.getMainLooper().queue)
-    } else {
-      handler.post { setupIdleHandler(Looper.myQueue()) }
-    }
+    setupIdleHandler(Looper.getMainLooper().queue)
   }
 }

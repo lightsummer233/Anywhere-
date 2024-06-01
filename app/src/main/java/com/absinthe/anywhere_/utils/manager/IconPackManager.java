@@ -283,7 +283,7 @@ public class IconPackManager {
 
     private Bitmap generateBitmap(Bitmap defaultBitmap) {
       // if no support images in the icon pack return the bitmap itself
-      if (mBackImages.size() == 0) {
+      if (mBackImages.isEmpty()) {
         return defaultBitmap;
       }
 

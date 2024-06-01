@@ -116,22 +116,12 @@ public class ColorPickerDialogBuilder {
 	}
 
 	public ColorPickerDialogBuilder setPositiveButton(CharSequence text, final ColorPickerClickListener onClickListener) {
-		builder.setPositiveButton(text, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				positiveButtonOnClick(dialog, onClickListener);
-			}
-		});
+		builder.setPositiveButton(text, (dialog, which) -> positiveButtonOnClick(dialog, onClickListener));
 		return this;
 	}
 
 	public ColorPickerDialogBuilder setPositiveButton(int textId, final ColorPickerClickListener onClickListener) {
-		builder.setPositiveButton(textId, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				positiveButtonOnClick(dialog, onClickListener);
-			}
-		});
+		builder.setPositiveButton(textId, (dialog, which) -> positiveButtonOnClick(dialog, onClickListener));
 		return this;
 	}
 
@@ -256,7 +246,7 @@ public class ColorPickerDialogBuilder {
 					if (initialColor[i] == null)
 						break;
 					LinearLayout colorLayout = (LinearLayout) View.inflate(context, R.layout.color_selector, null);
-					ImageView colorImage = (ImageView) colorLayout.findViewById(R.id.image_preview);
+					ImageView colorImage = colorLayout.findViewById(R.id.image_preview);
 					colorImage.setImageDrawable(new ColorDrawable(initialColor[i]));
 					colorPreview.addView(colorLayout);
 				}
@@ -269,7 +259,7 @@ public class ColorPickerDialogBuilder {
 	}
 
 	private Integer getStartOffset(Integer[] colors) {
-		Integer start = 0;
+		int start = 0;
 		for (int i = 0; i < colors.length; i++) {
 			if (colors[i] == null) {
 				return start;

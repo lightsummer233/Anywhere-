@@ -15,7 +15,7 @@ class ThreadAwareDebugTree : DebugTree() {
     super.log(priority, newTag, message, t)
   }
 
-  override fun createStackElementTag(element: StackTraceElement): String? {
+  override fun createStackElementTag(element: StackTraceElement): String {
     return super.createStackElementTag(element) + " (Line ${element.lineNumber})"
   }
 }

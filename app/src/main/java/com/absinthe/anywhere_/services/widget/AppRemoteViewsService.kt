@@ -21,7 +21,7 @@ import com.blankj.utilcode.util.ConvertUtils
 import com.catchingnow.icebox.sdk_client.IceBox
 import timber.log.Timber
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Collections
 
 class AppRemoteViewsService : RemoteViewsService() {
 

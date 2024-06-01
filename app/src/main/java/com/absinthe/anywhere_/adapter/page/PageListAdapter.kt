@@ -4,7 +4,7 @@ import com.absinthe.anywhere_.R
 import com.absinthe.anywhere_.adapter.ItemTouchCallBack
 import com.chad.library.adapter.base.BaseNodeAdapter
 import com.chad.library.adapter.base.entity.node.BaseNode
-import java.util.*
+import java.util.Collections
 
 class PageListAdapter : BaseNodeAdapter(), ItemTouchCallBack.OnItemTouchListener {
 

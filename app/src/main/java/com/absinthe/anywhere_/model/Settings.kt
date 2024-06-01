@@ -13,7 +13,8 @@ import com.absinthe.anywhere_.utils.manager.IconPackManager.IconPack
 import com.tencent.mmkv.MMKV
 import jonathanfinerty.once.Once
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 object Settings {
 
@@ -54,7 +55,7 @@ object Settings {
 
     if (!Once.beenDone(Once.THIS_APP_INSTALL, OnceTag.MMKV_MIGRATE)) {
       val sp = application.getSharedPreferences(GlobalValues.spName, MODE_PRIVATE)
-      MMKV.mmkvWithID(GlobalValues.spName)?.importFromSharedPreferences(sp)
+      MMKV.mmkvWithID(GlobalValues.spName).importFromSharedPreferences(sp)
       Once.markDone(OnceTag.MMKV_MIGRATE)
     }
   }

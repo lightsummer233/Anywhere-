@@ -7,7 +7,14 @@ import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.Spinner
 import com.absinthe.anywhere_.R
-import com.absinthe.anywhere_.model.*
+import com.absinthe.anywhere_.model.ExtraBean
+import com.absinthe.anywhere_.model.TYPE_BOOLEAN
+import com.absinthe.anywhere_.model.TYPE_DOUBLE
+import com.absinthe.anywhere_.model.TYPE_FLOAT
+import com.absinthe.anywhere_.model.TYPE_INT
+import com.absinthe.anywhere_.model.TYPE_LONG
+import com.absinthe.anywhere_.model.TYPE_STRING
+import com.absinthe.anywhere_.model.TYPE_URI
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 

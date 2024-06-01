@@ -20,7 +20,7 @@ public class ColorCircleDrawable extends ColorDrawable {
 	public void draw(Canvas canvas) {
 		canvas.drawColor(0);
 
-		int width = canvas.getWidth();
+		int width = getBounds().width();
 		float radius = width / 2f;
 		strokeWidth = radius / 8f;
 

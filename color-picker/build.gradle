@@ -2,14 +2,13 @@ apply plugin: 'com.android.library'
 
 android {
 	compileSdk 34
+  ndkVersion "27.0.11718014-rc1"
 
 	defaultConfig {
     namespace "com.flask.colorpicker"
 		minSdkVersion 23
 		targetSdkVersion 33
-		versionCode 18
-		versionName "0.0.16"
-	}
+  }
 	buildTypes {
 		release {
 			minifyEnabled false
@@ -18,7 +17,12 @@ android {
 	}
 }
 
+configurations.configureEach {
+  exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+  exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+}
+
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
-	api 'androidx.appcompat:appcompat:1.1.0'
+	api 'androidx.appcompat:appcompat:1.7.0'
 }

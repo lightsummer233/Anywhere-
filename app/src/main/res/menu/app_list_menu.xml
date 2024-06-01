@@ -5,10 +5,10 @@
   <item
     android:id="@+id/search"
     android:icon="@drawable/ic_search"
-    android:title="@string/menu_search"
-    app:actionViewClass="androidx.appcompat.widget.SearchView"
-    app:showAsAction="always|collapseActionView"
-    tools:ignore="AlwaysShowAction" />
+      android:showAsAction="always|collapseActionView"
+      android:title="@string/menu_search"
+      app:actionViewClass="androidx.appcompat.widget.SearchView"
+      tools:ignore="AlwaysShowAction" />
 
   <item
     android:id="@+id/show_system_app"

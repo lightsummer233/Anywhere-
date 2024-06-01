@@ -2,7 +2,11 @@ package com.absinthe.anywhere_.ui.main
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.*
+import android.view.HapticFeedbackConstants
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +17,15 @@ import com.absinthe.anywhere_.AnywhereApplication
 import com.absinthe.anywhere_.R
 import com.absinthe.anywhere_.adapter.ItemTouchCallBack
 import com.absinthe.anywhere_.adapter.SpacesItemDecoration
-import com.absinthe.anywhere_.adapter.card.*
+import com.absinthe.anywhere_.adapter.card.ADAPTER_MODE_NORMAL
+import com.absinthe.anywhere_.adapter.card.ADAPTER_MODE_SELECT
+import com.absinthe.anywhere_.adapter.card.ADAPTER_MODE_SORT
+import com.absinthe.anywhere_.adapter.card.BaseCardAdapter
+import com.absinthe.anywhere_.adapter.card.DiffListCallback
+import com.absinthe.anywhere_.adapter.card.LAYOUT_MODE_LARGE
+import com.absinthe.anywhere_.adapter.card.LAYOUT_MODE_MEDIUM
+import com.absinthe.anywhere_.adapter.card.LAYOUT_MODE_MINIMUM
+import com.absinthe.anywhere_.adapter.card.LAYOUT_MODE_SMALL
 import com.absinthe.anywhere_.adapter.manager.WrapContentStaggeredGridLayoutManager
 import com.absinthe.anywhere_.constants.AnywhereType
 import com.absinthe.anywhere_.constants.Const

@@ -145,22 +145,16 @@ public class LogRecorder {
   }
 
   private String getLevelStr() {
-    switch (mLevel) {
-      case 2:
-        return "V";
-      case 3:
-        return "D";
-      case 4:
-        return "I";
-      case 5:
-        return "W";
-      case 6:
-        return "E";
-      case 7:
-        return "F";
-    }
+    return switch (mLevel) {
+      case 2 -> "V";
+      case 3 -> "D";
+      case 4 -> "I";
+      case 5 -> "W";
+      case 6 -> "E";
+      case 7 -> "F";
+      default -> "V";
+    };
 
-    return "V";
   }
 
   /**
@@ -252,7 +246,7 @@ public class LogRecorder {
           if (!mRunning) {
             break;
           }
-          if (line.length() == 0) {
+          if (line.isEmpty()) {
             continue;
           }
           if (out != null) {
@@ -260,7 +254,7 @@ public class LogRecorder {
             out.write(data);
             if (logFileLimitation != 0) {
               currentFileSize += data.length;
-              if (currentFileSize > logFileLimitation * 1024) {
+              if (currentFileSize > logFileLimitation * 1024L) {
                 restartHandler.sendEmptyMessage(EVENT_RESTART_LOG);
                 break;
               }

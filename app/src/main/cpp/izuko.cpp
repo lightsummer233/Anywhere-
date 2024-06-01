@@ -10,7 +10,7 @@
 
 extern "C"
 const char *PACKAGE_NAME = "com.absinthe.anywhere_";
-const char *RELEASE_SIGN_MD5 = "D689B2D1B05AD9C1F7E41B4608C4DDF3";
+const char *RELEASE_SIGN_MD5 = "8DDB342F2DA5408402D7568AF21E29F9";
 const char *CIPHER_KEY = "absintheeeeeeeeeeeeeeeeeeeeeeeee";
 
 /**

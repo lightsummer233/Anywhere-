@@ -5,7 +5,7 @@ import android.os.Process
 import androidx.appcompat.app.AppCompatActivity
 import timber.log.Timber
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Stack
 
 object ActivityStackManager {
   /***

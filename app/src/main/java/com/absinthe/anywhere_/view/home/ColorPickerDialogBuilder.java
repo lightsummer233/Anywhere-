@@ -124,22 +124,12 @@ public class ColorPickerDialogBuilder {
   }
 
   public ColorPickerDialogBuilder setPositiveButton(CharSequence text, final ColorPickerClickListener onClickListener) {
-    builder.setPositiveButton(text, new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        positiveButtonOnClick(dialog, onClickListener);
-      }
-    });
+    builder.setPositiveButton(text, (dialog, which) -> positiveButtonOnClick(dialog, onClickListener));
     return this;
   }
 
   public ColorPickerDialogBuilder setPositiveButton(int textId, final ColorPickerClickListener onClickListener) {
-    builder.setPositiveButton(textId, new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        positiveButtonOnClick(dialog, onClickListener);
-      }
-    });
+    builder.setPositiveButton(textId, (dialog, which) -> positiveButtonOnClick(dialog, onClickListener));
     return this;
   }
 

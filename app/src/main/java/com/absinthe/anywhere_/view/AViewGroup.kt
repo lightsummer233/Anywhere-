@@ -1,4 +1,4 @@
-package com.absinthe.libchecker.view
+package com.absinthe.anywhere_.view
 
 import android.content.Context
 import android.view.View

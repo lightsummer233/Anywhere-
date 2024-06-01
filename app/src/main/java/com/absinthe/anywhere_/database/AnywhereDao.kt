@@ -2,7 +2,13 @@ package com.absinthe.anywhere_.database
 
 import android.database.Cursor
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.RoomWarnings
+import androidx.room.Update
 import com.absinthe.anywhere_.model.database.AnywhereEntity
 import com.absinthe.anywhere_.model.database.PageEntity
 
@@ -44,11 +50,13 @@ interface AnywhereDao {
   @Query("SELECT * from anywhere_table WHERE _id LIKE :id")
   fun getEntityById(id: String): AnywhereEntity?
 
+  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
   @Query("SELECT * FROM anywhere_table")
-  fun selectAll(): Cursor?
+  fun selectAll(): Cursor
 
+  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
   @Query("SELECT * FROM anywhere_table WHERE _id LIKE :id")
-  fun selectById(id: Long): Cursor?
+  fun selectById(id: Long): Cursor
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insertPage(pe: PageEntity)

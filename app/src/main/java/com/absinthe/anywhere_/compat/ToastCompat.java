@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 /**
  * @author drakeet
@@ -34,7 +35,7 @@ public final class ToastCompat extends Toast {
   public ToastCompat(Context context, @NonNull Toast base) {
     super(context);
     this.toast = base;
-    setContextCompat(toast.getView(), new SafeToastContext(context, toast));
+    setContextCompat(Objects.requireNonNull(toast.getView()), new SafeToastContext(context, toast));
   }
 
 
@@ -52,7 +53,7 @@ public final class ToastCompat extends Toast {
     // the View will unwrap the base context and we are in vain.
     @SuppressLint("ShowToast")
     Toast toast = Toast.makeText(context, text, duration);
-    setContextCompat(toast.getView(), new SafeToastContext(context, toast));
+    setContextCompat(Objects.requireNonNull(toast.getView()), new SafeToastContext(context, toast));
     return new ToastCompat(context, toast);
   }
 

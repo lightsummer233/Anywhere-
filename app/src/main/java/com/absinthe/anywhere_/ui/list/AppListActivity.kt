@@ -7,8 +7,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.absinthe.anywhere_.AppBarActivity
@@ -113,11 +117,6 @@ class AppListActivity : AppBarActivity<ActivityAppListBinding>(), SearchView.OnQ
   override fun initView() {
     super.initView()
     binding.extendedFab.apply {
-      post {
-        translationY =
-          -((window.decorView.rootWindowInsets?.systemWindowInsetBottom ?: 0) + 16.dp).toFloat()
-        translationX = -16.dp.toFloat()
-      }
       setOnClickListener {
         val ae = AnywhereEntity().apply {
           appName = AnywhereType.Card.NEW_TITLE_MAP[AnywhereType.Card.ACTIVITY]!!
@@ -128,6 +127,17 @@ class AppListActivity : AppBarActivity<ActivityAppListBinding>(), SearchView.OnQ
           putExtra(EXTRA_EDIT_MODE, false)
         })
       }
+    }
+    ViewCompat.setOnApplyWindowInsetsListener(binding.extendedFab) { v, insets ->
+      val inset = Insets.max(
+        insets.getInsets(WindowInsetsCompat.Type.systemBars()),
+        insets.getInsets(WindowInsetsCompat.Type.displayCutout())
+      )
+      (v.layoutParams as? ViewGroup.MarginLayoutParams)?.let { layoutParams ->
+        layoutParams.bottomMargin = inset.bottom + 34.dp
+        v.layoutParams = layoutParams
+      }
+      return@setOnApplyWindowInsetsListener insets
     }
   }
 

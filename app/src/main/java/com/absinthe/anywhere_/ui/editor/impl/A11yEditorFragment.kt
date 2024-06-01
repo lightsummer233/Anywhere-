@@ -22,7 +22,12 @@ import com.absinthe.anywhere_.constants.GlobalValues
 import com.absinthe.anywhere_.constants.OnceTag
 import com.absinthe.anywhere_.databinding.EditorA11yBinding
 import com.absinthe.anywhere_.ui.editor.BaseEditorFragment
-import com.absinthe.anywhere_.ui.list.*
+import com.absinthe.anywhere_.ui.list.AppDetailActivity
+import com.absinthe.anywhere_.ui.list.AppListActivity
+import com.absinthe.anywhere_.ui.list.EXTRA_APP_DETAIL_ENTRY_MODE
+import com.absinthe.anywhere_.ui.list.EXTRA_APP_LIST_ENTRY_MODE
+import com.absinthe.anywhere_.ui.list.EXTRA_PACKAGE_NAME
+import com.absinthe.anywhere_.ui.list.MODE_SELECT
 import com.absinthe.anywhere_.utils.AppUtils
 import com.absinthe.anywhere_.utils.ShortcutsUtils
 import com.absinthe.anywhere_.utils.handler.Opener

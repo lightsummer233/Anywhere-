@@ -46,52 +46,45 @@ final class SafeToastContext extends ContextWrapper {
   }
 
 
-  private static final class WindowManagerWrapper implements WindowManager {
+  private record WindowManagerWrapper(@NonNull WindowManager base) implements WindowManager {
 
-    private static final String TAG = "WindowManagerWrapper";
-    private final @NonNull
-    WindowManager base;
-
-
-    private WindowManagerWrapper(@NonNull WindowManager base) {
-      this.base = base;
-    }
+      private static final String TAG = "WindowManagerWrapper";
 
 
     @Override
-    public Display getDefaultDisplay() {
-      return base.getDefaultDisplay();
-    }
+      public Display getDefaultDisplay() {
+        return base.getDefaultDisplay();
+      }
 
 
-    @Override
-    public void removeViewImmediate(View view) {
-      base.removeViewImmediate(view);
-    }
+      @Override
+      public void removeViewImmediate(View view) {
+        base.removeViewImmediate(view);
+      }
 
 
-    @Override
-    public void addView(View view, ViewGroup.LayoutParams params) {
-      try {
-        Timber.tag(TAG).d("WindowManager's addView(view, params) has been hooked.");
-        base.addView(view, params);
-      } catch (BadTokenException e) {
-        Timber.tag(TAG).i(e);
-      } catch (Throwable throwable) {
-        Timber.tag(TAG).e(throwable, "[addView]");
+      @Override
+      public void addView(View view, ViewGroup.LayoutParams params) {
+        try {
+          Timber.tag(TAG).d("WindowManager's addView(view, params) has been hooked.");
+          base.addView(view, params);
+        } catch (BadTokenException e) {
+          Timber.tag(TAG).i(e);
+        } catch (Throwable throwable) {
+          Timber.tag(TAG).e(throwable, "[addView]");
+        }
+      }
+
+
+      @Override
+      public void updateViewLayout(View view, ViewGroup.LayoutParams params) {
+        base.updateViewLayout(view, params);
+      }
+
+
+      @Override
+      public void removeView(View view) {
+        base.removeView(view);
       }
     }
-
-
-    @Override
-    public void updateViewLayout(View view, ViewGroup.LayoutParams params) {
-      base.updateViewLayout(view, params);
-    }
-
-
-    @Override
-    public void removeView(View view) {
-      base.removeView(view);
-    }
-  }
 }

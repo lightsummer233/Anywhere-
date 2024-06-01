@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.thegrizzlylabs.sardineandroid.DavResource
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 class WebdavRestoreAdapter :
   BaseQuickAdapter<DavResource, BaseViewHolder>(R.layout.item_webdav_restore) {

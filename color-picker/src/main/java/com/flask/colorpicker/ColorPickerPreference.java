@@ -88,11 +88,11 @@ public class ColorPickerPreference extends Preference {
 				? selectedColor
 				: darken(selectedColor, .5f);
 
-		colorIndicator = (ImageView) view.findViewById(R.id.color_indicator);
+		colorIndicator = view.findViewById(R.id.color_indicator);
 
 		ColorCircleDrawable colorChoiceDrawable = null;
 		Drawable currentDrawable = colorIndicator.getDrawable();
-		if (currentDrawable != null && currentDrawable instanceof ColorCircleDrawable)
+		if (currentDrawable instanceof ColorCircleDrawable)
 			colorChoiceDrawable = (ColorCircleDrawable) currentDrawable;
 
 		if (colorChoiceDrawable == null)
@@ -124,12 +124,7 @@ public class ColorPickerPreference extends Preference {
 			.wheelType(wheelType)
 			.density(density)
 			.showColorEdit(pickerColorEdit)
-			.setPositiveButton(pickerButtonOk, new ColorPickerClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int selectedColorFromPicker, Integer[] allColors) {
-					setValue(selectedColorFromPicker);
-				}
-			})
+			.setPositiveButton(pickerButtonOk, (dialog, selectedColorFromPicker, allColors) -> setValue(selectedColorFromPicker))
 			.setNegativeButton(pickerButtonCancel, null);
 
 		if (!alphaSlider && !lightSlider) builder.noSliders();

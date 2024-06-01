@@ -1,7 +1,11 @@
 package com.absinthe.anywhere_.ui.editor
 
 import android.app.Activity
-import android.content.*
+import android.content.ActivityNotFoundException
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
@@ -30,9 +34,14 @@ import com.absinthe.anywhere_.services.overlay.IOverlayService
 import com.absinthe.anywhere_.services.overlay.OverlayService
 import com.absinthe.anywhere_.ui.dialog.EXTRA_FROM_WORKFLOW
 import com.absinthe.anywhere_.ui.editor.impl.WorkflowEditorFragment
-import com.absinthe.anywhere_.utils.*
+import com.absinthe.anywhere_.utils.AppTextUtils
+import com.absinthe.anywhere_.utils.AppUtils
 import com.absinthe.anywhere_.utils.AppUtils.atLeastNMR1
 import com.absinthe.anywhere_.utils.AppUtils.atLeastR
+import com.absinthe.anywhere_.utils.ClipboardUtil
+import com.absinthe.anywhere_.utils.ShortcutsUtils
+import com.absinthe.anywhere_.utils.ToastUtil
+import com.absinthe.anywhere_.utils.UxUtils
 import com.absinthe.anywhere_.utils.manager.DialogManager
 import com.absinthe.anywhere_.utils.manager.DialogManager.showAddShortcutDialog
 import com.absinthe.anywhere_.utils.manager.DialogManager.showCannotAddShortcutDialog
@@ -176,7 +185,7 @@ class EditorActivity : BaseActivity<ActivityEditorBinding>() {
     supportFragmentManager
       .beginTransaction()
       .replace(binding.fragmentContainerView.id, fragment)
-      .commitNow()
+      .commit()
 
     if (editor is WorkflowEditorFragment) {
       workflowResultItem.observe(this) {

@@ -35,7 +35,11 @@ import com.absinthe.anywhere_.utils.AppUtils.isAppFrozen
 import com.absinthe.anywhere_.utils.ShortcutsUtils
 import com.absinthe.anywhere_.utils.UxUtils
 import com.absinthe.anywhere_.utils.handler.Opener
-import com.absinthe.anywhere_.view.card.*
+import com.absinthe.anywhere_.view.card.CardItemView
+import com.absinthe.anywhere_.view.card.MinimumItemView
+import com.absinthe.anywhere_.view.card.NormalItemView
+import com.absinthe.anywhere_.view.card.StreamItemView
+import com.absinthe.anywhere_.view.card.StreamSingleLineItemView
 import com.absinthe.libraries.utils.extensions.dp
 import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.Glide

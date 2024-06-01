@@ -8,7 +8,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
-import java.util.*
+import java.util.Hashtable
 
 object QRCodeUtil {
   /**

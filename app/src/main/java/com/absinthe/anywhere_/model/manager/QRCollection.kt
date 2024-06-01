@@ -19,7 +19,6 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.Utils
 import com.google.gson.Gson
 import java.lang.ref.WeakReference
-import java.util.*
 
 object QRCollection {
 

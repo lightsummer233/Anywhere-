@@ -18,7 +18,7 @@ class CoreProvider : ContentProvider() {
     const val AE_TABLE = "anywhere_table"
     const val CODE_AE_DIR = 1
     const val CODE_AE_ITEM = 2
-    val URI_ANYWHERE_ENTITY = Uri.parse("content://$AUTHORITY/$AE_TABLE")
+    val URI_ANYWHERE_ENTITY: Uri = Uri.parse("content://$AUTHORITY/$AE_TABLE")
     val MATCHER = UriMatcher(UriMatcher.NO_MATCH)
   }
 
@@ -42,12 +42,12 @@ class CoreProvider : ContentProvider() {
     return if (code == CODE_AE_DIR || code == CODE_AE_ITEM) {
       val context = context ?: return null
       val aeDao: AnywhereDao = AnywhereRoomDatabase.getDatabase(context).anywhereDao()
-      val cursor: Cursor? = if (code == CODE_AE_DIR) {
+      val cursor: Cursor = if (code == CODE_AE_DIR) {
         aeDao.selectAll()
       } else {
         aeDao.selectById(ContentUris.parseId(uri))
       }
-      cursor?.setNotificationUri(context.contentResolver, uri)
+      cursor.setNotificationUri(context.contentResolver, uri)
       cursor
     } else {
       throw IllegalArgumentException("Unknown URI: $uri")

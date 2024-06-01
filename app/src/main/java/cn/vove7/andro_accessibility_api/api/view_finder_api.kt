@@ -1,6 +1,5 @@
 package cn.vove7.andro_accessibility_api.api
 
-import android.util.Log
 import android.view.accessibility.AccessibilityNodeInfo
 import cn.vove7.andro_accessibility_api.AccessibilityApi
 import cn.vove7.andro_accessibility_api.utils.times
@@ -8,6 +7,7 @@ import cn.vove7.andro_accessibility_api.viewfinder.CustomViewFinder
 import cn.vove7.andro_accessibility_api.viewfinder.ViewFindBuilder
 import cn.vove7.andro_accessibility_api.viewfinder.ViewFinderWithMultiCondition
 import cn.vove7.andro_accessibility_api.viewnode.ViewNode
+import timber.log.Timber
 
 /**
  * # apis
@@ -143,13 +143,13 @@ private fun ViewNode.printWithChild(
   includeInvisible: Boolean
 ) {
   if (!includeInvisible && !isVisibleToUser) {
-    Log.w("ViewNode", "*" * dep + "[$index] " + "InVisible")
+    Timber.tag("ViewNode").w("*" * dep + "[" + index + "] " + "InVisible")
     return
   }
   if (isVisibleToUser) {
-    Log.d("ViewNode", "*" * dep + "[$index] " + toString())
+    Timber.tag("ViewNode").d("*" * dep + "[" + index + "] " + toString())
   } else {
-    Log.w("ViewNode", "*" * dep + "[$index] " + toString())
+    Timber.tag("ViewNode").w("*" * dep + "[" + index + "] " + toString())
   }
   children.forEachIndexed { i, it ->
     it.printWithChild(i, dep + 1, includeInvisible)

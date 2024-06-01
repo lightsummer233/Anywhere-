@@ -16,8 +16,7 @@ object GlobalValues {
     Const.SP_NAME
   }
 
-  val mmkv: MMKV =
-    MMKV.mmkvWithID(spName) ?: throw IllegalStateException("mmkv instance is null")
+  val mmkv: MMKV = MMKV.mmkvWithID(spName)
 
   var sIsDebugMode = false
   var shouldListenClipBoard = true

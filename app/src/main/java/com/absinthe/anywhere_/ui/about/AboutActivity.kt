@@ -22,7 +22,11 @@ import com.absinthe.anywhere_.utils.manager.URLManager
 import com.absinthe.libraries.me.Absinthe
 import com.absinthe.libraries.utils.utils.UiUtils
 import com.blankj.utilcode.util.AppUtils
-import com.drakeet.about.*
+import com.drakeet.about.AbsAboutActivity
+import com.drakeet.about.Card
+import com.drakeet.about.Category
+import com.drakeet.about.Contributor
+import com.drakeet.about.License
 import com.drakeet.about.provided.GlideImageLoader
 
 class AboutActivity : AbsAboutActivity() {
@@ -281,7 +285,7 @@ class AboutActivity : AbsAboutActivity() {
               prepare()
               start()
             }
-          } catch (e: Exception) {
+          } catch (_: Exception) {
           }
         } else {
           GlobalValues.sIsDebugMode = true

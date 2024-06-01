@@ -1,7 +1,11 @@
 package com.absinthe.anywhere_.utils.manager
 
 import android.app.Activity
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -24,8 +28,20 @@ import com.absinthe.anywhere_.model.cloud.RuleEntity
 import com.absinthe.anywhere_.model.database.AnywhereEntity
 import com.absinthe.anywhere_.ui.backup.RestoreApplyFragmentDialog
 import com.absinthe.anywhere_.ui.backup.WebdavFilesListDialogFragment
-import com.absinthe.anywhere_.ui.dialog.*
+import com.absinthe.anywhere_.ui.dialog.AdvancedCardSelectDialogFragment
+import com.absinthe.anywhere_.ui.dialog.CardSharingDialogFragment
+import com.absinthe.anywhere_.ui.dialog.CloudRuleDetailDialogFragment
+import com.absinthe.anywhere_.ui.dialog.DynamicParamsDialogFragment
 import com.absinthe.anywhere_.ui.dialog.DynamicParamsDialogFragment.OnParamsInputListener
+import com.absinthe.anywhere_.ui.dialog.EXTRA_CONTENT
+import com.absinthe.anywhere_.ui.dialog.EXTRA_ENTITY
+import com.absinthe.anywhere_.ui.dialog.EXTRA_FROM_WORKFLOW
+import com.absinthe.anywhere_.ui.dialog.EXTRA_NEED_FINISH_ACTIVITY
+import com.absinthe.anywhere_.ui.dialog.EXTRA_SHARING_TEXT
+import com.absinthe.anywhere_.ui.dialog.IceBoxGrantDialogFragment
+import com.absinthe.anywhere_.ui.dialog.ImageDialogFragment
+import com.absinthe.anywhere_.ui.dialog.RenameDialogFragment
+import com.absinthe.anywhere_.ui.dialog.ShellResultBottomSheetDialogFragment
 import com.absinthe.anywhere_.ui.list.CardListDialogFragment
 import com.absinthe.anywhere_.ui.settings.IconPackDialogFragment
 import com.absinthe.anywhere_.ui.settings.IntervalDialogFragment

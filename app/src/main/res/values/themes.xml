@@ -9,6 +9,7 @@
     <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
     <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
     <item name="dropDownListViewStyle">@style/Widget.Aw.PopupMenu</item>
+    <item name="extendedFloatingActionButtonStyle">@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Secondary</item>
 
     <item name="android:windowActionBar">false</item>
     <item name="android:windowNoTitle">true</item>
