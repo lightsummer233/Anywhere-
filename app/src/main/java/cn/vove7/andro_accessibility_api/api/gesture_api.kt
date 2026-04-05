@@ -77,9 +77,6 @@ fun gesture(
   duration: Long, paths: Array<Path>,
   onCancel: Function0<Unit>? = null
 ): Boolean {
-  if (gestureService == null) {
-    return false
-  }
   return playGestures(
     paths.map { GestureDescription.StrokeDescription(it, 0, duration) },
     onCancel

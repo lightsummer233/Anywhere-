@@ -1,9 +1,7 @@
 package com.absinthe.anywhere_.ui.settings
 
-import android.app.Activity
 import android.app.admin.DevicePolicyManager
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -50,7 +48,7 @@ class DefrostActivity : AppBarActivity<ActivityDefrostBinding>() {
                         if (com.absinthe.anywhere_.utils.AppUtils.atLeastO()) {
                             try {
                                 DSMClient.requestScopes(this@DefrostActivity, Const.REQUEST_CODE_DSM, DevicePolicyManager.DELEGATION_PACKAGE_ACCESS)
-                            } catch (e: ActivityNotFoundException) {
+                            } catch (_: ActivityNotFoundException) {
                                 ToastUtil.makeText(R.string.toast_dsm_not_support)
                             }
                         }
@@ -63,7 +61,7 @@ class DefrostActivity : AppBarActivity<ActivityDefrostBinding>() {
                             }
                         }
                     } else if (mList[position].mode == Const.DEFROST_MODE_DPM) {
-                        val devicePolicyManager = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+                        val devicePolicyManager = getSystemService(DEVICE_POLICY_SERVICE) as DevicePolicyManager
 
                         if (devicePolicyManager.isAdminActive(AdminReceiver.componentName)) {
                             val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
@@ -91,7 +89,7 @@ class DefrostActivity : AppBarActivity<ActivityDefrostBinding>() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (grantResults.isEmpty()) return
 
-        if (grantResults[0] == Activity.RESULT_OK) {
+        if (grantResults[0] == RESULT_OK) {
             if (requestCode == Const.REQUEST_CODE_ICEBOX ||
                 requestCode == Const.REQUEST_CODE_DSM ||
                 requestCode == Const.REQUEST_CODE_DPM) {

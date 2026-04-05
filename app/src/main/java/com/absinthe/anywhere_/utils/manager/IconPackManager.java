@@ -37,7 +37,7 @@ import java.util.Random;
  */
 public class IconPackManager {
 
-  private final Application mContext = AnywhereApplication.app;
+  private final Application mContext = AnywhereApplication.instance;
   private HashMap<String, IconPack> iconPacks = null;
 
   public HashMap<String, IconPack> getAvailableIconPacks(boolean forceReload) {

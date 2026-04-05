@@ -1,6 +1,5 @@
 package com.absinthe.anywhere_.ui.shortcuts
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -8,6 +7,7 @@ import android.content.pm.ResolveInfo
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.CallSuper
+import androidx.core.content.IntentCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.absinthe.anywhere_.AppBarActivity
 import com.absinthe.anywhere_.BuildConfig
@@ -87,7 +87,8 @@ class ThirdAppsShortcutActivity : AppBarActivity<ActivityThirdAppsShortcutBindin
     ): SynchronousResult<Intent?>? = null
 
     override fun parseResult(resultCode: Int, intent: Intent?): Intent? {
-      return intent.takeIf { resultCode == Activity.RESULT_OK }?.getParcelableExtra(Intent.EXTRA_SHORTCUT_INTENT, Intent::class.java)
+      if (resultCode != RESULT_OK || intent == null) return null
+      return IntentCompat.getParcelableExtra(intent, Intent.EXTRA_SHORTCUT_INTENT, Intent::class.java)
     }
   }
 }

@@ -16,6 +16,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.TwoStatePreference
 import androidx.recyclerview.widget.RecyclerView
+import com.absinthe.anywhere_.AnywhereApplication
 import com.absinthe.anywhere_.AppBarActivity
 import com.absinthe.anywhere_.BaseActivity
 import com.absinthe.anywhere_.R
@@ -27,7 +28,6 @@ import com.absinthe.anywhere_.utils.CipherUtils
 import com.absinthe.anywhere_.utils.StorageUtils
 import com.absinthe.anywhere_.utils.ToastUtil
 import com.absinthe.anywhere_.utils.manager.DialogManager
-import com.blankj.utilcode.util.Utils
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -60,7 +60,7 @@ class BackupActivity : AppBarActivity<ActivityBackupBinding>() {
         registerForActivityResult(CreateDocument("todo/todo")) {
           it?.let {
             try {
-              Utils.getApp().contentResolver.openOutputStream(it)?.let { os ->
+              AnywhereApplication.instance.contentResolver.openOutputStream(it)?.let { os ->
                 StorageUtils.exportAnywhereEntityJsonString()?.let { content ->
                   CipherUtils.encrypt(content)?.let { encrypted ->
                     os.write(encrypted.toByteArray())
@@ -78,7 +78,7 @@ class BackupActivity : AppBarActivity<ActivityBackupBinding>() {
       restoreResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let { data ->
           try {
-            Utils.getApp().contentResolver.openInputStream(data)?.let { inputStream ->
+            AnywhereApplication.instance.contentResolver.openInputStream(data)?.let { inputStream ->
               val reader = BufferedReader(InputStreamReader(inputStream))
               val stringBuilder = StringBuilder()
               var line: String?
@@ -260,7 +260,7 @@ class BackupActivity : AppBarActivity<ActivityBackupBinding>() {
 
     private fun getPWString(text: String): String {
       val sb = StringBuilder().apply {
-        for (char in text) {
+        repeat(text.length) {
           append("●")
         }
       }

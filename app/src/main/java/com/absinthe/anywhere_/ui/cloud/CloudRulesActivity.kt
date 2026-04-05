@@ -2,7 +2,6 @@ package com.absinthe.anywhere_.ui.cloud
 
 import android.animation.LayoutTransition
 import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.widget.LinearLayout
@@ -71,7 +70,7 @@ class CloudRulesActivity : AppBarActivity<ActivityCloudRulesBinding>(),
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.cloud_rules_menu, menu)
 
-    val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+    val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
     val searchView = menu.findItem(R.id.search).actionView as SearchView
     val showSystemApp = menu.findItem(R.id.show_system_app)
     searchView.findViewById<LinearLayout>(androidx.appcompat.R.id.search_bar)?.layoutTransition =

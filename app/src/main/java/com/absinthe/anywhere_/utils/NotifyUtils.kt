@@ -7,13 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MANIFEST
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.absinthe.anywhere_.AnywhereApplication
 import com.absinthe.anywhere_.AwContextWrapper
 import com.absinthe.anywhere_.R
@@ -41,7 +41,7 @@ object NotifyUtils {
     AwContextWrapper(Utils.getApp()).getText(R.string.notification_channel_collector),
     NotificationUtils.IMPORTANCE_LOW
   )
-  private val notificationManager by lazy { NotificationManagerCompat.from(AnywhereApplication.app) }
+  private val notificationManager by lazy { NotificationManagerCompat.from(AnywhereApplication.instance) }
 
   fun createCollectorNotification(context: Service) {
     val areNotificationsEnabled = notificationManager.areNotificationsEnabled()
@@ -79,7 +79,7 @@ object NotifyUtils {
       return
     }
     val intent = Intent().apply {
-      data = Uri.parse(AppUtils.getUrlByParam(pkgName, clsName, "", true))
+      data = AppUtils.getUrlByParam(pkgName, clsName, "", true).toUri()
     }
     val pendingIntent = TaskStackBuilder.create(context)
       .addNextIntentWithParentStack(intent)

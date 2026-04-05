@@ -114,10 +114,8 @@ object CommandUtils {
               ToastUtil.makeText(R.string.toast_no_react_url)
             } else if (e is RuntimeException) {
               ToastUtil.makeText(R.string.toast_runtime_error)
-            } else if (AppUtils.atLeastN()) {
-              if (e is FileUriExposedException) {
-                ToastUtil.makeText(R.string.toast_file_uri_exposed)
-              }
+            } else if (AppUtils.atLeastN() && e is FileUriExposedException) {
+              ToastUtil.makeText(R.string.toast_file_uri_exposed)
             }
           }
           result = CommandResult.RESULT_URL_SCHEME

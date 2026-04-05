@@ -3,6 +3,7 @@ package com.absinthe.anywhere_.model.manager
 import android.content.Context
 import android.content.Intent
 import android.view.accessibility.AccessibilityManager
+import com.absinthe.anywhere_.AnywhereApplication
 import com.absinthe.anywhere_.R
 import com.absinthe.anywhere_.a11y.A11yActionBean
 import com.absinthe.anywhere_.a11y.A11yEntity
@@ -15,15 +16,13 @@ import com.absinthe.anywhere_.model.database.AnywhereEntity
 import com.absinthe.anywhere_.model.viewholder.FlowStepBean
 import com.absinthe.anywhere_.utils.handler.Opener
 import com.absinthe.anywhere_.utils.handler.URLSchemeHandler
-import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.Utils
 import com.google.gson.Gson
 import java.lang.ref.WeakReference
 
 object QRCollection {
 
   val entitySet = mutableSetOf<AnywhereEntity>()
-  private val context = WeakReference<Context>(Utils.getApp())
+  private val context = WeakReference<Context>(AnywhereApplication.instance)
   private val accessibilityManager: AccessibilityManager
   private val map: HashMap<String, QREntity>
 
@@ -472,7 +471,7 @@ object QRCollection {
             FlowStepBean(
               entity = AnywhereEntity().apply {
                 type = AnywhereType.Card.ACCESSIBILITY
-                param1 = GsonUtils.toJson(a11yEntity)
+                param1 = Gson().toJson(a11yEntity)
               },
               delay = 0L
             )

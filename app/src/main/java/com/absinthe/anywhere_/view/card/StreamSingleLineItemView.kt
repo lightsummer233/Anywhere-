@@ -6,7 +6,6 @@ import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +17,7 @@ import com.absinthe.libraries.utils.extensions.dp
 class StreamSingleLineItemView(context: Context) : ConstraintLayout(context) {
 
   val icon: AppCompatImageView = AppCompatImageView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     backgroundTintList = ContextCompat.getColorStateList(
       context,
       com.google.android.material.R.color.material_on_surface_emphasis_medium
@@ -27,17 +26,17 @@ class StreamSingleLineItemView(context: Context) : ConstraintLayout(context) {
   }
 
   val badge: ImageView = ImageView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     contentDescription = context.getString(R.string.icon_badge_todo)
-    visibility = View.GONE
+    visibility = GONE
   }
 
   val indicator: ImageView = ImageView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
   }
 
   val appName: AlwaysMarqueeTextView = AlwaysMarqueeTextView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     gravity = Gravity.CENTER_VERTICAL
     setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
     setTypeface(null, Typeface.BOLD)

@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -143,10 +144,12 @@ class InitializeFragment : Fragment(), OnButtonCheckedListener {
     }
   }
 
+  @Deprecated("Deprecated in Java")
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     inflater.inflate(R.menu.initialize_menu, menu)
   }
 
+  @Deprecated("Deprecated in Java")
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     if (item.itemId == R.id.toolbar_initialize_done) {
       GlobalValues.workingMode = mWorkingMode
@@ -239,7 +242,7 @@ class InitializeFragment : Fragment(), OnButtonCheckedListener {
     when (card) {
       CARD_ROOT -> {
         rootBinding.btnAcquireRootPermission.setOnClickListener {
-          isRoot.setValue(ShellManager.acquireRoot())
+          isRoot.value = ShellManager.acquireRoot()
         }
         if (isAdd) {
           if (!bRoot) {
@@ -268,7 +271,7 @@ class InitializeFragment : Fragment(), OnButtonCheckedListener {
       }
       CARD_OVERLAY -> {
         overlayBinding.btnAcquireOverlayPermission.setOnClickListener {
-          val isGrant = PermissionUtils.isGrantedDrawOverlays()
+          val isGrant = Settings.canDrawOverlays(requireContext())
           isOverlay.value = isGrant
           if (!isGrant) {
             if (AppUtils.atLeastR()) {
@@ -325,6 +328,7 @@ class InitializeFragment : Fragment(), OnButtonCheckedListener {
     }
   }
 
+  @Deprecated("Deprecated in Java")
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     if (requestCode == Const.REQUEST_CODE_GO_TO_MIUI_PERM_MANAGER) {
       isPopup.value =
@@ -353,6 +357,7 @@ class InitializeFragment : Fragment(), OnButtonCheckedListener {
     }
   }
 
+  @Deprecated("Deprecated in Java")
   override fun onRequestPermissionsResult(
     requestCode: Int,
     permissions: Array<out String>,

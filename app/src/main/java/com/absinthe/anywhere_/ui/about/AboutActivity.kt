@@ -2,7 +2,6 @@ package com.absinthe.anywhere_.ui.about
 
 import android.content.ActivityNotFoundException
 import android.graphics.BitmapFactory
-import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Menu
@@ -12,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.text.HtmlCompat
 import com.absinthe.anywhere_.BuildConfig
 import com.absinthe.anywhere_.R
@@ -252,7 +252,7 @@ class AboutActivity : AbsAboutActivity() {
   private fun createDebugListener(): View.OnClickListener {
     mClickCount = 0
     mEndTime = 0
-    mStartTime = mEndTime
+    mStartTime = 0
 
     return View.OnClickListener {
       mEndTime = System.currentTimeMillis()
@@ -275,8 +275,8 @@ class AboutActivity : AbsAboutActivity() {
               )
             )
             findViewById<TextView>(com.drakeet.about.R.id.slogan).text = "えい、私もよ。"
-            setHeaderBackground(ColorDrawable(ContextCompat.getColor(this, R.color.renge)))
-            setHeaderContentScrim(ColorDrawable(ContextCompat.getColor(this, R.color.renge)))
+            setHeaderBackground(ContextCompat.getColor(this, R.color.renge).toDrawable())
+            setHeaderContentScrim(ContextCompat.getColor(this, R.color.renge).toDrawable())
 
             val fd = assets.openFd("renge_no_koe.aac")
             MediaPlayer().apply {

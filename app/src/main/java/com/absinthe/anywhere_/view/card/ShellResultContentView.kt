@@ -2,7 +2,6 @@ package com.absinthe.anywhere_.view.card
 
 import android.content.Context
 import android.view.Gravity
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import androidx.appcompat.widget.AppCompatImageButton
@@ -20,12 +19,12 @@ class ShellResultContentView(context: Context) : LinearLayout(context), IHeaderV
 
   private val header = BottomSheetHeaderView(context).apply {
     layoutParams =
-      LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+      LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     title.text = context.getString(R.string.dialog_shell_result_title)
   }
 
   private val container = ScrollView(context).apply {
-    layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
     paddingBottomCompat = 24.dp
     clipToPadding = false
   }
@@ -44,8 +43,8 @@ class ShellResultContentView(context: Context) : LinearLayout(context), IHeaderV
 
   val content = AppCompatTextView(context).apply {
     layoutParams = LayoutParams(
-      ViewGroup.LayoutParams.MATCH_PARENT,
-      ViewGroup.LayoutParams.WRAP_CONTENT
+      LayoutParams.MATCH_PARENT,
+      LayoutParams.WRAP_CONTENT
     ).also {
       it.topMargin = 24.dp
     }

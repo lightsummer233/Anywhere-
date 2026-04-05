@@ -50,11 +50,11 @@ interface AnywhereDao {
   @Query("SELECT * from anywhere_table WHERE _id LIKE :id")
   fun getEntityById(id: String): AnywhereEntity?
 
-  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+  @SuppressWarnings(RoomWarnings.QUERY_MISMATCH)
   @Query("SELECT * FROM anywhere_table")
   fun selectAll(): Cursor
 
-  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+  @SuppressWarnings(RoomWarnings.QUERY_MISMATCH)
   @Query("SELECT * FROM anywhere_table WHERE _id LIKE :id")
   fun selectById(id: Long): Cursor
 

@@ -1,7 +1,9 @@
 package com.absinthe.anywhere_.ui.shortcuts
 
-import android.app.Activity
-import android.content.*
+import android.content.ComponentName
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.widget.ArrayAdapter
@@ -34,7 +36,6 @@ import com.absinthe.anywhere_.view.app.AnywhereDialogBuilder
 import com.absinthe.anywhere_.view.app.AnywhereDialogFragment
 import com.absinthe.anywhere_.viewmodel.AnywhereViewModel
 import com.absinthe.libraries.utils.extensions.dp
-import com.blankj.utilcode.util.Utils
 import com.google.gson.Gson
 import com.microsoft.appcenter.analytics.Analytics
 import timber.log.Timber
@@ -89,7 +90,7 @@ class ShortcutsActivity : BaseActivity<ViewBinding>() {
               applicationContext.bindService(
                 Intent(this, CollectorService::class.java),
                 CollectorService.serviceConnection!!,
-                Context.BIND_AUTO_CREATE
+                BIND_AUTO_CREATE
               )
             }
           }
@@ -126,7 +127,7 @@ class ShortcutsActivity : BaseActivity<ViewBinding>() {
         Intent.ACTION_CREATE_SHORTCUT -> {
           viewModel.allAnywhereEntities.observe(this) { anywhereEntities: List<AnywhereEntity>? ->
             val arrayAdapter = ArrayAdapter<String>(
-              Utils.getApp(),
+              AnywhereApplication.instance,
               android.R.layout.select_dialog_singlechoice
             )
 
@@ -152,7 +153,7 @@ class ShortcutsActivity : BaseActivity<ViewBinding>() {
                     }
 
                   setResult(
-                    Activity.RESULT_OK, ShortcutManagerCompat.createShortcutResultIntent(
+                    RESULT_OK, ShortcutManagerCompat.createShortcutResultIntent(
                       this,
                       ShortcutInfoCompat.Builder(this, entity.id)
                         .setIntent(shortcutIntent)
@@ -224,7 +225,7 @@ class ShortcutsActivity : BaseActivity<ViewBinding>() {
                       dynamic,
                       ExtraBean.ExtraItem::class.java
                     )
-                  } catch (ignore: Exception) {
+                  } catch (_: Exception) {
                   }
                 }
               var dynamicParams: Array<ExtraBean.ExtraItem>? = null
@@ -235,7 +236,7 @@ class ShortcutsActivity : BaseActivity<ViewBinding>() {
                       dynamics,
                       Array<ExtraBean.ExtraItem>::class.java
                     )
-                  } catch (ignore: Exception) {
+                  } catch (_: Exception) {
                   }
                 }
               uri.getQueryParameter(Const.INTENT_EXTRA_OPEN_SHORT_ID)?.let { sid ->

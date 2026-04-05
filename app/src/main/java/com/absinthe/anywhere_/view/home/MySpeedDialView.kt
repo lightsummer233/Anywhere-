@@ -35,7 +35,7 @@ class MySpeedDialView : SpeedDialView {
         insets.getInsets(WindowInsetsCompat.Type.systemBars()),
         insets.getInsets(WindowInsetsCompat.Type.displayCutout())
       )
-      updatePadding(bottom = inset.bottom)
+      v.updatePadding(bottom = inset.bottom)
       return@setOnApplyWindowInsetsListener insets
     }
   }

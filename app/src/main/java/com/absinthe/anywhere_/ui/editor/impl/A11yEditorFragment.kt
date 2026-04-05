@@ -70,7 +70,7 @@ class A11yEditorFragment : BaseEditorFragment() {
     override fun initView() {
         val a11yEntity = try {
             Gson().fromJson(item.param1, A11yEntity::class.java)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
         item.let {
@@ -95,7 +95,7 @@ class A11yEditorFragment : BaseEditorFragment() {
 
             val extra: A11yEntity? = try {
                 Gson().fromJson(it.param1, A11yEntity::class.java)
-            } catch (e: JsonSyntaxException) {
+            } catch (_: JsonSyntaxException) {
                 null
             }
 
@@ -222,6 +222,7 @@ class A11yEditorFragment : BaseEditorFragment() {
         return true
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == Const.REQUEST_CODE_APP_LIST_SELECT) {
             data?.getStringExtra(EXTRA_PACKAGE_NAME)?.let {

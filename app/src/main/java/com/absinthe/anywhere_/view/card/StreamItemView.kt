@@ -5,8 +5,6 @@ import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.text.TextUtils
 import android.util.TypedValue
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -20,7 +18,7 @@ import com.absinthe.libraries.utils.extensions.dp
 class StreamItemView(context: Context) : ConstraintLayout(context) {
 
   val icon: AppCompatImageView = AppCompatImageView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     backgroundTintList = ContextCompat.getColorStateList(
       context,
       com.google.android.material.R.color.material_on_surface_emphasis_medium
@@ -29,25 +27,25 @@ class StreamItemView(context: Context) : ConstraintLayout(context) {
   }
 
   val badge: ImageView = ImageView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     contentDescription = context.getString(R.string.icon_badge_todo)
-    visibility = View.GONE
+    visibility = GONE
   }
 
   val indicator: ImageView = ImageView(context).apply {
-    id = View.generateViewId()
-    visibility = View.GONE
+    id = generateViewId()
+    visibility = GONE
   }
 
   val appName: TextView = TextView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     setTypeface(null, Typeface.BOLD)
     setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
     maxLines = 2
   }
 
   val description: AlwaysMarqueeTextView = AlwaysMarqueeTextView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Subtitle2)
     setTypeface(null, Typeface.BOLD)
     setHorizontallyScrolling(true)
@@ -87,7 +85,7 @@ class StreamItemView(context: Context) : ConstraintLayout(context) {
       marginEnd = 10.dp
     })
 
-    addView(description, LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+    addView(description, LayoutParams(0, LayoutParams.WRAP_CONTENT).apply {
       startToStart = appName.id
       endToEnd = appName.id
       topToBottom = icon.id

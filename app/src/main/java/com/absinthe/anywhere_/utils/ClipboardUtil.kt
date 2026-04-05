@@ -1,6 +1,5 @@
 package com.absinthe.anywhere_.utils
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Application.ActivityLifecycleCallbacks
 import android.content.ClipData
@@ -8,6 +7,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 
 object ClipboardUtil {
 
@@ -42,7 +42,7 @@ object ClipboardUtil {
   /**
    * Android Q get content from clipboard
    */
-  @TargetApi(Build.VERSION_CODES.Q)
+  @RequiresApi(Build.VERSION_CODES.Q)
   private fun getTextFroClipFromAndroidQ(activity: Activity, f: Function) {
     val runnable = Runnable label@{
       val clipboardManager =

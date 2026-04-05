@@ -3,7 +3,6 @@ package com.absinthe.anywhere_.ui.main
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
@@ -79,7 +78,6 @@ import com.absinthe.anywhere_.utils.ToastUtil
 import com.absinthe.anywhere_.utils.UxUtils
 import com.absinthe.anywhere_.utils.doOnMainThreadIdle
 import com.absinthe.anywhere_.utils.handler.Opener
-import com.absinthe.anywhere_.utils.manager.CardTypeIconGenerator
 import com.absinthe.anywhere_.utils.manager.DialogManager.showAdvancedCardSelectDialog
 import com.absinthe.anywhere_.utils.manager.URLManager
 import com.absinthe.anywhere_.view.home.FabBuilder.build
@@ -105,6 +103,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import androidx.core.view.get
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -218,15 +217,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         popup.menuInflater.inflate(R.menu.sort_menu, popup.menu)
 
         if (popup.menu is MenuBuilder) {
+          @Suppress("UsePropertyAccessSyntax")
           (popup.menu as MenuBuilder).setOptionalIconsVisible(true)
         }
 
         when (GlobalValues.sortMode) {
-          Const.SORT_MODE_TIME_DESC -> popup.menu.getItem(0).isChecked = true
-          Const.SORT_MODE_TIME_ASC -> popup.menu.getItem(1).isChecked = true
-          Const.SORT_MODE_NAME_DESC -> popup.menu.getItem(2).isChecked = true
-          Const.SORT_MODE_NAME_ASC -> popup.menu.getItem(3).isChecked = true
-          else -> popup.menu.getItem(0).isChecked = true
+          Const.SORT_MODE_TIME_DESC -> popup.menu[0].isChecked = true
+          Const.SORT_MODE_TIME_ASC -> popup.menu[1].isChecked = true
+          Const.SORT_MODE_NAME_DESC -> popup.menu[2].isChecked = true
+          Const.SORT_MODE_NAME_ASC -> popup.menu[3].isChecked = true
+          else -> popup.menu[0].isChecked = true
         }
 
         popup.setOnMenuItemClickListener { popupItem: MenuItem ->
@@ -275,6 +275,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     } else super.onOptionsItemSelected(item)
   }
 
+  @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
   override fun onBackPressed() {
     super.onBackPressed()
     when {
@@ -311,7 +312,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     binding.fullDraggableContainer.setEnableDrawer(GlobalValues.isPages)
 
     initFab()
-    CardTypeIconGenerator
 
     AnywhereApplication.sRepository.allPageEntities.observe(this) {
       if (it.isNotEmpty()) {
@@ -568,7 +568,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     bindService(
                       Intent(this@MainActivity, CollectorService::class.java),
                       conn,
-                      Context.BIND_AUTO_CREATE
+                      BIND_AUTO_CREATE
                     )
                   }
                 }
@@ -705,7 +705,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
               putExtra(EXTRA_ENTITY, Gson().fromJson(decrypted, AnywhereEntity::class.java))
               putExtra(EXTRA_EDIT_MODE, false)
             })
-          } catch (e: JsonSyntaxException) {
+          } catch (_: JsonSyntaxException) {
             ToastUtil.makeText(R.string.toast_json_error)
           }
         }
@@ -762,9 +762,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
   }
 
   private fun checkCardCategory() {
-    AnywhereApplication.sRepository.allAnywhereEntities.observe(this) {
+    AnywhereApplication.sRepository.allAnywhereEntities.observe(this) { entities ->
       lifecycleScope.launch(Dispatchers.IO) {
-        it.asSequence().forEach {
+        entities.asSequence().forEach {
           if (AnywhereApplication.sRepository.getPageEntityByTitle(it.category) == null) {
             AnywhereApplication.sRepository.insertPage(
               PageEntity().apply {

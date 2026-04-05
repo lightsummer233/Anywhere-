@@ -19,7 +19,7 @@ class WrapContentLinearLayoutManager : LinearLayoutManager {
   override fun onLayoutChildren(recycler: Recycler, state: RecyclerView.State) {
     try {
       super.onLayoutChildren(recycler, state)
-    } catch (e: IndexOutOfBoundsException) {
+    } catch (_: IndexOutOfBoundsException) {
       Timber.e("encounter an IOOBE in RecyclerView")
     }
   }

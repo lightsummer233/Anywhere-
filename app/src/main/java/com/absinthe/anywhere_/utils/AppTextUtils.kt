@@ -23,7 +23,7 @@ import java.util.Locale
 object AppTextUtils {
 
   /**
-   * get launch command of a item
+   * get launch command of an item
    *
    * @param item the item
    */
@@ -36,14 +36,14 @@ object AppTextUtils {
         var className = item.param2
         val extras: ExtraBean? = try {
           Gson().fromJson(item.param3, ExtraBean::class.java)
-        } catch (e: JsonSyntaxException) {
+        } catch (_: JsonSyntaxException) {
           null
         }
 
         if (className.orEmpty().startsWith(".")) {
           className = packageName + className
         }
-        className = className.orEmpty().replace("\$", "\\$")
+        className = className.orEmpty().replace("$", "\\$")
         cmd.append(String.format(Const.CMD_OPEN_ACTIVITY_FORMAT, packageName, className))
 
         extras?.let {
@@ -86,7 +86,7 @@ object AppTextUtils {
         val className = item.param3
         val extras: ExtraBean? = try {
           Gson().fromJson(item.param1, ExtraBean::class.java)
-        } catch (e: JsonSyntaxException) {
+        } catch (_: JsonSyntaxException) {
           null
         }
 

@@ -30,7 +30,7 @@ object GlobalValues {
         object : TypeToken<List<String>>() {}.type
       )
         ?: listOf()
-    } catch (e: JsonSyntaxException) {
+    } catch (_: JsonSyntaxException) {
       listOf()
     }
     set(value) {

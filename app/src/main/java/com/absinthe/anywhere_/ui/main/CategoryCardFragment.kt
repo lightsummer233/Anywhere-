@@ -39,7 +39,6 @@ import com.absinthe.anywhere_.utils.manager.DialogManager
 import com.absinthe.libraries.utils.extensions.paddingEndCompat
 import com.absinthe.libraries.utils.extensions.paddingStartCompat
 import com.absinthe.libraries.utils.utils.XiaomiUtilities
-import com.blankj.utilcode.util.Utils
 import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -102,6 +101,7 @@ class CategoryCardFragment : Fragment() {
     setRecyclerViewLayoutManager(binding.recyclerView, newConfig)
   }
 
+  @Deprecated("Deprecated in Java")
   override fun onPrepareOptionsMenu(menu: Menu) {
     menu.findItem(R.id.toolbar_settings).isVisible = adapter.mode == ADAPTER_MODE_NORMAL
     menu.findItem(R.id.toolbar_sort).isVisible = adapter.mode == ADAPTER_MODE_NORMAL
@@ -259,7 +259,7 @@ class CategoryCardFragment : Fragment() {
         list.toMutableList()
       }
     )
-    updateWidget(Utils.getApp())
+    updateWidget(AnywhereApplication.instance)
   }
 
   private fun resetSelectState() {

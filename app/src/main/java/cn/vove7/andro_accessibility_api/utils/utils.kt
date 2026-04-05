@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.provider.Settings
-import com.blankj.utilcode.util.Utils
+import com.absinthe.anywhere_.AnywhereApplication
 import java.util.Locale
 import kotlin.math.max
 
@@ -38,10 +38,11 @@ fun <T> whileWaitTime(waitMillis: Long, run: () -> T?): T? {
 
 
 fun jumpAccessibilityServiceSettings(cls: Class<*>) {
+  val context = AnywhereApplication.instance
   val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-  intent.putComponent(Utils.getApp().packageName, cls)
-  Utils.getApp().startActivity(intent)
+  intent.putComponent(context.packageName, cls)
+  context.startActivity(intent)
 }
 
 private fun Intent.putComponent(pkg: String, cls: Class<*>) {
@@ -92,7 +93,7 @@ fun compareSimilarity(str1: String, str2: String, ignoreCase: Boolean = true): F
 
 operator fun String.times(number: Int): String {
   return buildString {
-    for (i in 1..number) {
+    repeat(number) {
       append(this@times)
     }
   }

@@ -17,7 +17,7 @@ import com.absinthe.anywhere_.databinding.FragmentWebviewBinding
 import com.absinthe.anywhere_.ui.settings.SettingsActivity
 import com.absinthe.anywhere_.utils.manager.URLManager
 
-class WebviewFragment : Fragment() {
+class WebViewFragment : Fragment() {
 
   private lateinit var mBinding: FragmentWebviewBinding
   private lateinit var mUri: String
@@ -53,10 +53,12 @@ class WebviewFragment : Fragment() {
     }
   }
 
+  @Deprecated("Deprecated in Java")
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     inflater.inflate(R.menu.web_menu, menu)
   }
 
+  @Deprecated("Deprecated in Java")
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     if (item.itemId == R.id.toolbar_settings) {
       startActivity(Intent(context, SettingsActivity::class.java))
@@ -67,8 +69,8 @@ class WebviewFragment : Fragment() {
   companion object {
     private const val BUNDLE_URI = "BUNDLE_URI"
 
-    fun newInstance(uri: String?): WebviewFragment {
-      return WebviewFragment().apply {
+    fun newInstance(uri: String?): WebViewFragment {
+      return WebViewFragment().apply {
         arguments = Bundle().apply {
           putString(BUNDLE_URI, uri)
         }

@@ -3,6 +3,7 @@ package com.absinthe.anywhere_.ui.backup
 import android.app.Dialog
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import com.absinthe.anywhere_.AnywhereApplication
 import com.absinthe.anywhere_.R
 import com.absinthe.anywhere_.adapter.backup.WebdavRestoreAdapter
 import com.absinthe.anywhere_.constants.GlobalValues
@@ -13,7 +14,6 @@ import com.absinthe.anywhere_.utils.manager.URLManager
 import com.absinthe.anywhere_.view.app.AnywhereDialogBuilder
 import com.absinthe.anywhere_.view.app.AnywhereDialogFragment
 import com.blankj.utilcode.util.ConvertUtils
-import com.blankj.utilcode.util.Utils
 import com.thegrizzlylabs.sardineandroid.impl.OkHttpSardine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -76,7 +76,7 @@ class WebdavFilesListDialogFragment : AnywhereDialogFragment() {
       val result = ConvertUtils.inputStream2String(input, "UTF-8")
       result?.apply {
         withContext(Dispatchers.IO) {
-          StorageUtils.restoreFromJson(Utils.getApp(), this@apply)
+          StorageUtils.restoreFromJson(AnywhereApplication.instance, this@apply)
         }
       } ?: withContext(Dispatchers.Main) {
         activity?.let { ToastUtil.makeText(it, "JSON content error") }

@@ -6,10 +6,9 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Bundle
 import android.widget.RemoteViews
 import androidx.core.content.IntentCompat
+import androidx.core.net.toUri
 import com.absinthe.anywhere_.BuildConfig
 import com.absinthe.anywhere_.R
 import com.absinthe.anywhere_.constants.AnywhereType
@@ -35,7 +34,7 @@ class HomeWidgetProvider : AppWidgetProvider() {
         // 把这个 Widget 绑定到 RemoteViewsService
         val intent = Intent(context, AppRemoteViewsService::class.java).apply {
           putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-          data = Uri.parse(toUri(Intent.URI_INTENT_SCHEME))
+          data = toUri(Intent.URI_INTENT_SCHEME).toUri()
         }
 
         // 设置适配器
@@ -51,7 +50,7 @@ class HomeWidgetProvider : AppWidgetProvider() {
       ).run {
         // 设置 Action，方便在 onReceive 中区别点击事件
         action = CLICK_ACTION
-        data = Uri.parse(toUri(Intent.URI_INTENT_SCHEME))
+        data = toUri(Intent.URI_INTENT_SCHEME).toUri()
         PendingIntent.getBroadcast(
           context, 0, this,
           PendingIntent.FLAG_UPDATE_CURRENT or FlagDelegate.PENDING_INTENT_FLAG_MUTABLE
@@ -93,46 +92,6 @@ class HomeWidgetProvider : AppWidgetProvider() {
     }
 
     super.onReceive(context, intent)
-  }
-
-  /**
-   * 每删除一次窗口小部件就调用一次
-   */
-  override fun onDeleted(context: Context, appWidgetIds: IntArray) {
-    super.onDeleted(context, appWidgetIds)
-  }
-
-  /**
-   * 当最后一个该窗口小部件删除时调用该方法
-   */
-  override fun onDisabled(context: Context) {
-    super.onDisabled(context)
-  }
-
-  /**
-   * 当该窗口小部件第一次添加到桌面时调用该方法
-   */
-  override fun onEnabled(context: Context) {
-    super.onEnabled(context)
-  }
-
-  /**
-   * 当小部件大小改变时
-   */
-  override fun onAppWidgetOptionsChanged(
-    context: Context,
-    appWidgetManager: AppWidgetManager,
-    appWidgetId: Int,
-    newOptions: Bundle
-  ) {
-    super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
-  }
-
-  /**
-   * 当小部件从备份恢复时调用该方法
-   */
-  override fun onRestored(context: Context, oldWidgetIds: IntArray, newWidgetIds: IntArray) {
-    super.onRestored(context, oldWidgetIds, newWidgetIds)
   }
 
   companion object {

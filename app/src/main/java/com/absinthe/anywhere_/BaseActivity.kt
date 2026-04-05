@@ -1,7 +1,6 @@
 package com.absinthe.anywhere_
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -66,7 +65,7 @@ abstract class BaseActivity<T : ViewBinding> : MaterialActivity() {
             } else {
               try {
                 AppUtils.takePersistableUriPermission(this, uri, it)
-              } catch (e: RuntimeException) {
+              } catch (_: RuntimeException) {
                 ToastUtil.makeText(R.string.toast_runtime_error)
               }
             }
@@ -161,7 +160,7 @@ abstract class BaseActivity<T : ViewBinding> : MaterialActivity() {
     ): SynchronousResult<Intent?>? = null
 
     override fun parseResult(resultCode: Int, intent: Intent?): Intent? {
-      return intent.takeIf { resultCode == Activity.RESULT_OK }
+      return intent.takeIf { resultCode == RESULT_OK }
     }
   }
 }

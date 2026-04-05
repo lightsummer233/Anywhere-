@@ -1,57 +1,38 @@
+@file:Suppress("UnstableApiUsage")
+
 import com.android.build.gradle.tasks.PackageAndroidArtifact
-import java.nio.file.Paths
+// import java.nio.file.Paths
 
 plugins {
   id("com.android.application")
-  id("org.jetbrains.kotlin.android")
   id("com.google.devtools.ksp")
   id("org.jetbrains.kotlin.plugin.parcelize")
   id("dev.rikka.tools.materialthemebuilder")
 }
 
-val verName = "2.5.5"
-val verCode = 2050500
-
 android {
   namespace = "com.absinthe.anywhere_"
-  compileSdk = 35
-  buildToolsVersion = "35.0.0"
-  ndkVersion = "27.0.12077973"
+  compileSdk {
+    version = release(37) {
+      minorApiLevel = 0
+    }
+  }
+  buildToolsVersion = "37.0.0"
+  ndkVersion = "29.0.14206865"
 
   defaultConfig {
     applicationId = "com.absinthe.anywhere_"
     minSdk = 23
-    targetSdk = 35
-    versionCode = verCode
-    versionName = verName
+    targetSdk = 37
+    versionCode = 2050500
+    versionName = "2.5.5"
     manifestPlaceholders["appName"] = "Anywhere-"
 
-    resourceConfigurations += arrayOf("en", "zh-rCN", "zh-rTW", "zh-rHK")
+    base.archivesName = "Anywhere-$versionName-$versionCode"
 
-    setProperty("archivesBaseName", "Anywhere-$versionName-$versionCode")
-  }
-
-  splits {
-    abi {
-      // Enables building multiple APKs per ABI.
-      isEnable = true
-
-      // By default all ABIs are included, so use reset() and include to specify that you only
-      // want APKs for x86 and x86_64.
-
-      // Resets the list of ABIs for Gradle to create APKs for to none.
-      reset()
-
-      // Specifies a list of ABIs for Gradle to create APKs for.
-      include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
-
-      // Specifies that you don't want to also generate a universal APK that includes all ABIs.
-      isUniversalApk = true
+    ndk {
+      abiFilters += listOf("arm64-v8a", "x86_64")
     }
-  }
-  ksp {
-    arg("room.incremental", "true")
-    arg("room.schemaLocation", "$projectDir/schemas")
   }
 
   buildFeatures {
@@ -81,21 +62,9 @@ android {
     }
   }
 
-  java {
-    toolchain {
-      languageVersion = JavaLanguageVersion.of(17)
-    }
-  }
-
-  kotlin {
-    jvmToolchain(17)
-    compilerOptions {
-      freeCompilerArgs = listOf(
-        "-Xno-param-assertions",
-        "-Xno-call-assertions",
-        "-Xno-receiver-assertions"
-      )
-    }
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
   }
 
   dependenciesInfo {
@@ -109,6 +78,10 @@ android {
     }
   }
 
+  androidResources {
+    generateLocaleConfig = true
+  }
+
   packaging {
     resources {
       excludes += "okhttp3/**"
@@ -116,28 +89,28 @@ android {
       excludes += "org/**"
       excludes += "**.properties"
 
-      // https://stackoverflow.com/a/58956288
       excludes += "META-INF/*.version"
-      // https://github.com/Kotlin/kotlinx.coroutines?tab=readme-ov-file#avoiding-including-the-debug-infrastructure-in-the-resulting-apk
+      excludes += "META-INF/**/LICENSE.txt"
+
       excludes += "DebugProbesKt.bin"
-      // https://issueantenna.com/repo/kotlin/kotlinx.coroutines/issues/3158
-      excludes += "kotlin-tooling-metadata.json"
 
       excludes += "XPP3_1.1.3.2_VERSION"
       excludes += "XPP3_1.1.3.3_VERSION"
     }
-    jniLibs {
-      useLegacyPackaging = false
-    }
-    dex {
-      useLegacyPackaging = false
-    }
+    dex.useLegacyPackaging = false
   }
+}
 
-  // https://stackoverflow.com/a/77745844
-  tasks.withType<PackageAndroidArtifact> {
-    doFirst { appMetadata.asFile.orNull?.writeText("") }
-  }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+ksp {
+  arg("room.incremental", "true")
+  arg("room.schemaLocation", "$projectDir/schemas")
+}
+
+// https://stackoverflow.com/a/77745844
+tasks.withType<PackageAndroidArtifact> {
+  doFirst { appMetadata.asFile.orNull?.writeText("") }
 }
 
 materialThemeBuilder {
@@ -153,6 +126,7 @@ materialThemeBuilder {
   generatePalette = true
 }
 
+/*
 val optimizeReleaseRes: Task = task("optimizeReleaseRes").doLast {
   val aapt2 = File(
     androidComponents.sdkComponents.sdkDirectory.get().asFile,
@@ -192,6 +166,7 @@ tasks.configureEach {
     finalizedBy(optimizeReleaseRes)
   }
 }
+ */
 
 configurations.all {
   exclude("androidx.appcompat", "appcompat")
@@ -205,58 +180,62 @@ dependencies {
   implementation(project(":color-picker"))
   implementation(files("libs/IceBox-SDK-1.0.6.aar"))
 
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
 
   implementation("com.github.zhaobozhen.libraries:me:1.1.4")
   implementation("com.github.zhaobozhen.libraries:utils:1.1.4")
 
-  val appCenterSdkVersion = "5.0.4"
+  val appCenterSdkVersion = "5.0.6"
   implementation("com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}")
   implementation("com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}")
 
   // Android X
-  val roomVersion = "2.6.1"
+  val roomVersion = "2.8.4"
   implementation("androidx.room:room-runtime:${roomVersion}")
   implementation("androidx.room:room-ktx:${roomVersion}")
   ksp("androidx.room:room-compiler:${roomVersion}")
 
-  val lifecycleVersion = "2.8.4"
+  val lifecycleVersion = "2.10.0"
   implementation("androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}")
   implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}")
 
-  implementation("androidx.browser:browser:1.8.0")
-  implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-  implementation("androidx.coordinatorlayout:coordinatorlayout:1.3.0-alpha02")
+  implementation("androidx.browser:browser:1.10.0")
+  implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+  implementation("androidx.coordinatorlayout:coordinatorlayout:1.3.0")
   implementation("androidx.viewpager2:viewpager2:1.1.0")
-  implementation("androidx.recyclerview:recyclerview:1.3.2")
+  implementation("androidx.recyclerview:recyclerview:1.4.0")
   implementation("androidx.drawerlayout:drawerlayout:1.2.0")
 
   // KTX
-  implementation("androidx.collection:collection-ktx:1.4.3")
-  implementation("androidx.activity:activity-ktx:1.9.1")
-  implementation("androidx.fragment:fragment-ktx:1.8.2")
+  implementation("androidx.collection:collection-ktx:1.6.0")
+  implementation("androidx.activity:activity-ktx:1.13.0")
+  implementation("androidx.fragment:fragment-ktx:1.8.9")
   implementation("androidx.palette:palette-ktx:1.0.0")
-  implementation("androidx.core:core-ktx:1.14.0-alpha01")
+  implementation("androidx.core:core-ktx:1.18.0")
   implementation("androidx.preference:preference-ktx:1.2.1")
 
   // Google
-  implementation("com.google.android.material:material:1.13.0-alpha05")
+  implementation("com.google.android.material:material:1.13.0")
 
   // Function
-  implementation("com.github.bumptech.glide:glide:4.16.0")
-  ksp("com.github.bumptech.glide:compiler:4.16.0")
+  implementation("com.github.bumptech.glide:glide:5.0.5")
+  ksp("com.github.bumptech.glide:compiler:5.0.5")
 
-  implementation("com.google.code.gson:gson:2.11.0")
-  implementation("com.google.zxing:core:3.5.3")
-  implementation("com.blankj:utilcodex:1.31.1")
-  implementation("com.tencent:mmkv-static:1.3.9")
+  implementation("com.google.code.gson:gson:2.13.2")
+  implementation("com.google.zxing:core:3.5.4")
+  implementation("com.tencent:mmkv-static:2.4.0")
   implementation("com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.11")
   implementation("com.github.heruoxin.Delegated-Scopes-Manager:client:master-SNAPSHOT")
   implementation("com.github.topjohnwu.libsu:core:6.0.0")
   implementation("com.github.thegrizzlylabs:sardine-android:0.8")
   implementation("com.jonathanfinerty.once:once:1.3.1")
-  implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
+  implementation("org.lsposed.hiddenapibypass:hiddenapibypass:6.1")
   implementation("com.jakewharton.timber:timber:5.0.1")
+
+  // TODO: Remove it
+  implementation("com.blankj:utilcodex:1.31.1") {
+    exclude("org.jetbrains.kotlin", "kotlin-android-extensions-runtime")
+  }
 
   // UX
   implementation("com.drakeet.about:about:2.5.2")
@@ -274,7 +253,7 @@ dependencies {
 
   implementation("dev.rikka.rikkax.appcompat:appcompat:1.6.1")
   implementation("dev.rikka.rikkax.core:core:1.4.1")
-  implementation("dev.rikka.rikkax.material:material:2.7.0")
+  implementation("dev.rikka.rikkax.material:material:2.7.2")
   implementation("dev.rikka.rikkax.recyclerview:recyclerview-ktx:1.3.2")
   implementation("dev.rikka.rikkax.widget:borderview:1.1.0")
   implementation("dev.rikka.rikkax.preference:simplemenu-preference:1.0.3")
@@ -283,10 +262,10 @@ dependencies {
   implementation("dev.rikka.rikkax.material:material-preference:2.0.0")
 
   // Network
-  implementation("com.squareup.okhttp3:okhttp:4.12.0")
-  implementation("com.squareup.retrofit2:retrofit:2.11.0")
-  implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-  implementation("com.squareup.okio:okio:3.9.0")
+  implementation("com.squareup.okhttp3:okhttp:5.3.2")
+  implementation("com.squareup.retrofit2:retrofit:3.0.0")
+  implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+  implementation("com.squareup.okio:okio:3.17.0")
 
   // Rx
   implementation("io.reactivex.rxjava2:rxandroid:2.1.1")

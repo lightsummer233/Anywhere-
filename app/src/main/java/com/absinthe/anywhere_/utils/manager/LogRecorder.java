@@ -129,7 +129,7 @@ public class LogRecorder {
     }
 
     // logcat -f , but the rotated count default is 4?
-    // can`t be sure to use that feature
+    // can't be sure to use that feature
     if (mPID != INVALID_PID) {
       mUseLogcatFileOut = false;
       String pidStr = adjustPIDStr();
@@ -309,7 +309,7 @@ public class LogRecorder {
     private String mLogFolderName;
     /**
      * the whole folder path that we save log files to,
-     * this setting`s priority is bigger than folder name.
+     * this setting's priority is bigger than folder name.
      */
     private String mLogFolderPath;
     /**
@@ -329,7 +329,7 @@ public class LogRecorder {
     private int mLogLevel = LogRecorder.LOG_LEVEL_NO_SET;
     /**
      * filter through pid, by setting this with your APP PID,
-     * the log recorder will just record the APP`s own log,
+     * the log recorder will just record the APP's own log,
      * use one call: android.os.Process.myPid().
      */
     private int mPID = LogRecorder.INVALID_PID;

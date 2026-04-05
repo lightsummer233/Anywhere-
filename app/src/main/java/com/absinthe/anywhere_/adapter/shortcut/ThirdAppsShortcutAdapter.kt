@@ -10,6 +10,6 @@ class ThirdAppsShortcutAdapter: BaseQuickAdapter<ResolveInfo, BaseViewHolder>(R.
   override fun convert(holder: BaseViewHolder, item: ResolveInfo) {
     holder.setText(R.id.tv_app_name, AppUtils.getAppName(item.activityInfo.packageName))
     holder.setImageDrawable(R.id.iv_app_icon, item.loadIcon(context.packageManager))
-    holder.setText(R.id.tv_pkg_name, (item.loadLabel(context.packageManager) ?: "App").toString())
+    holder.setText(R.id.tv_pkg_name, item.loadLabel(context.packageManager).toString())
   }
 }

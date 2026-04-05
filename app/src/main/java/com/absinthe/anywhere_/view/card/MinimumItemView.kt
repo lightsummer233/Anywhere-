@@ -5,7 +5,6 @@ import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +17,7 @@ import com.absinthe.libraries.view.AlwaysMarqueeTextView
 class MinimumItemView(context: Context) : ConstraintLayout(context) {
 
   val icon: AppCompatImageView = AppCompatImageView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     backgroundTintList = ContextCompat.getColorStateList(
       context,
       com.google.android.material.R.color.material_on_surface_emphasis_medium
@@ -27,14 +26,14 @@ class MinimumItemView(context: Context) : ConstraintLayout(context) {
   }
 
   val badge: ImageView = ImageView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     contentDescription = context.getString(R.string.icon_badge_todo)
-    visibility = View.GONE
+    visibility = GONE
   }
 
   val indicator: ImageView = ImageView(context).apply {
-    id = View.generateViewId()
-    visibility = View.GONE
+    id = generateViewId()
+    visibility = GONE
   }
 
   val appName: AlwaysMarqueeTextView = AlwaysMarqueeTextView(context).apply {

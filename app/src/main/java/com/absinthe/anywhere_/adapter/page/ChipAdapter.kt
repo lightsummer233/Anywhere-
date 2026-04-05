@@ -16,7 +16,7 @@ class ChipAdapter internal constructor(category: String) :
 
   init {
     AnywhereApplication.sRepository.allAnywhereEntities.value?.let { list ->
-      for (item in list) {
+      repeat(list.size) {
         setList(list.filter { it.category == category || (it.category.isNullOrEmpty() && category == AnywhereType.Category.DEFAULT_CATEGORY) })
       }
     }
@@ -33,7 +33,7 @@ class ChipAdapter internal constructor(category: String) :
   override fun getItemId(position: Int): Long {
     return try {
       data[position].id.hashCode().toLong()
-    } catch (e: Exception) {
+    } catch (_: Exception) {
       super.getItemId(position)
     }
   }

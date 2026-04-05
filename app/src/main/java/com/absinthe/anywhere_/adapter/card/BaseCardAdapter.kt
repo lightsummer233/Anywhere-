@@ -7,11 +7,11 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.graphics.drawable.ColorDrawable
 import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -98,7 +98,7 @@ class BaseCardAdapter(
       } else {
         item.appName
       }
-    } catch (e: PackageManager.NameNotFoundException) {
+    } catch (_: PackageManager.NameNotFoundException) {
       item.appName
     }
 
@@ -144,7 +144,7 @@ class BaseCardAdapter(
                     AnywhereApplication.sRepository.update(item)
                   } else {
                     itemView.cardBackground.post {
-                      itemView.cardBackground.background = ColorDrawable(color)
+                      itemView.cardBackground.background = color.toDrawable()
                       itemView.appName.setTextColor(if (UxUtils.isLightColor(color)) Color.BLACK else Color.WHITE)
                       normalView?.content?.description?.setTextColor(if (UxUtils.isLightColor(color)) Color.BLACK else Color.WHITE)
                     }
@@ -155,7 +155,7 @@ class BaseCardAdapter(
             itemView.cardBackground.setImageDrawable(null)
           } else {
             itemView.cardBackground.post {
-              itemView.cardBackground.background = ColorDrawable(item.color)
+              itemView.cardBackground.background = item.color.toDrawable()
               itemView.appName.setTextColor(if (UxUtils.isLightColor(item.color)) Color.BLACK else Color.WHITE)
               normalView?.content?.description?.setTextColor(if (UxUtils.isLightColor(item.color)) Color.BLACK else Color.WHITE)
             }
@@ -256,7 +256,7 @@ class BaseCardAdapter(
       }
     }
 
-    if (item.iconUri.isNullOrEmpty()) {
+    if (item.iconUri.isEmpty()) {
       Glide.with(context.applicationContext)
         .load(UxUtils.getAppIcon(context, item, 45.dp))
         .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -385,7 +385,7 @@ class BaseCardAdapter(
   }
 
   fun deleteSelect() {
-    if (selectedIndex.size == 0) {
+    if (selectedIndex.isEmpty()) {
       return
     }
     val deleteList = mutableListOf<AnywhereEntity>()
@@ -402,7 +402,7 @@ class BaseCardAdapter(
   }
 
   fun moveSelect(pageTitle: String) {
-    if (selectedIndex.size == 0) {
+    if (selectedIndex.isEmpty()) {
       return
     }
     val moveList = mutableListOf<AnywhereEntity>()
@@ -422,7 +422,7 @@ class BaseCardAdapter(
   }
 
   suspend fun createShortcutSelect() {
-    if (selectedIndex.size == 0) {
+    if (selectedIndex.isEmpty()) {
       return
     }
 

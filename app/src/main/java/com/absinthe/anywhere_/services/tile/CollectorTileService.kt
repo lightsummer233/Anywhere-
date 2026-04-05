@@ -1,7 +1,6 @@
 package com.absinthe.anywhere_.services.tile
 
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Build
@@ -34,7 +33,7 @@ class CollectorTileService : TileService() {
         bindService(
           Intent(this, CollectorService::class.java),
           connection,
-          Context.BIND_AUTO_CREATE
+          BIND_AUTO_CREATE
         )
       }
     }

@@ -3,8 +3,6 @@ package com.absinthe.anywhere_.view.card
 import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.Typeface
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -17,7 +15,7 @@ import com.absinthe.libraries.utils.extensions.dp
 class NormalItemView(context: Context) : ConstraintLayout(context) {
 
   val icon: AppCompatImageView = AppCompatImageView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     backgroundTintList = ContextCompat.getColorStateList(
       context,
       com.google.android.material.R.color.material_on_surface_emphasis_medium
@@ -26,34 +24,34 @@ class NormalItemView(context: Context) : ConstraintLayout(context) {
   }
 
   val badge: ImageView = ImageView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     contentDescription = context.getString(R.string.icon_badge_todo)
-    visibility = View.GONE
+    visibility = GONE
   }
 
   val indicator: ImageView = ImageView(context).apply {
-    id = View.generateViewId()
-    visibility = View.GONE
+    id = generateViewId()
+    visibility = GONE
   }
 
   val appName: TextView = TextView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6)
     setTypeface(null, Typeface.BOLD)
   }
 
   val param1: TextView = TextView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Body2)
   }
 
   val param2: TextView = TextView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Body2)
   }
 
   val description: TextView = TextView(context).apply {
-    id = View.generateViewId()
+    id = generateViewId()
     setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Subtitle2)
   }
 
@@ -78,7 +76,7 @@ class NormalItemView(context: Context) : ConstraintLayout(context) {
       bottomToBottom = icon.id
     })
 
-    addView(appName, LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+    addView(appName, LayoutParams(0, LayoutParams.WRAP_CONTENT).apply {
       startToStart = this@NormalItemView.id
       endToStart = icon.id
       topToTop = this@NormalItemView.id
@@ -87,21 +85,21 @@ class NormalItemView(context: Context) : ConstraintLayout(context) {
       topMargin = 10.dp
     })
 
-    addView(param1, LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+    addView(param1, LayoutParams(0, LayoutParams.WRAP_CONTENT).apply {
       startToStart = appName.id
       endToEnd = appName.id
       topToBottom = appName.id
       topMargin = 4.dp
     })
 
-    addView(param2, LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+    addView(param2, LayoutParams(0, LayoutParams.WRAP_CONTENT).apply {
       startToStart = appName.id
       endToEnd = appName.id
       topToBottom = param1.id
       topMargin = 4.dp
     })
 
-    addView(description, LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+    addView(description, LayoutParams(0, LayoutParams.WRAP_CONTENT).apply {
       startToStart = appName.id
       endToEnd = appName.id
       topToBottom = param2.id

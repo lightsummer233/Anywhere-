@@ -3,7 +3,6 @@ package com.absinthe.anywhere_.ui.list
 import android.animation.LayoutTransition
 import android.app.SearchManager
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -110,7 +109,7 @@ class AppDetailActivity : AppBarActivity<ActivityAppDetailBinding>(),
 
         val isFrozen = try {
           IceBox.getAppEnabledSetting(this@AppDetailActivity, pkgName) != 0 //0 means available
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
           false
         }
 
@@ -120,6 +119,7 @@ class AppDetailActivity : AppBarActivity<ActivityAppDetailBinding>(),
           val pmFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             PackageManager.MATCH_DISABLED_COMPONENTS
           } else {
+            @Suppress("DEPRECATION")
             PackageManager.GET_DISABLED_COMPONENTS
           }
           packageManager.getPackageArchiveInfo(
@@ -186,7 +186,7 @@ class AppDetailActivity : AppBarActivity<ActivityAppDetailBinding>(),
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.app_detail_menu, menu)
 
-    val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+    val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
     val searchView = menu.findItem(R.id.search).actionView as SearchView
 
     searchView.apply {
@@ -217,7 +217,7 @@ class AppDetailActivity : AppBarActivity<ActivityAppDetailBinding>(),
             intent.getStringExtra(Const.INTENT_EXTRA_PKG_NAME)
           )
         })
-      } catch (e: ActivityNotFoundException) {
+      } catch (_: ActivityNotFoundException) {
         ToastUtil.makeText(R.string.toast_no_react_show_info)
       }
     }

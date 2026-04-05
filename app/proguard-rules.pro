@@ -19,6 +19,8 @@
 #-classobfuscationdictionary dictionary.txt
 #-packageobfuscationdictionary dictionary.txt
 -repackageclasses com.absinthe.anywhere_
+-allowaccessmodification
+-overloadaggressively
 
 -dontpreverify
 
@@ -87,17 +89,7 @@
     @androidx.annotation.Keep <init>(...);
 }
 
--assumenosideeffects class kotlin.jvm.internal.Intrinsics {
-    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
-    static void checkExpressionValueIsNotNull(java.lang.Object, java.lang.String);
-    static void checkNotNullExpressionValue(java.lang.Object, java.lang.String);
-    static void checkReturnedValueIsNotNull(java.lang.Object, java.lang.String, java.lang.String);
-    static void checkReturnedValueIsNotNull(java.lang.Object, java.lang.String);
-    static void checkFieldIsNotNull(java.lang.Object, java.lang.String, java.lang.String);
-    static void checkFieldIsNotNull(java.lang.Object, java.lang.String);
-    static void checkNotNull(java.lang.Object, java.lang.String);
-    static void checkNotNullParameter(java.lang.Object, java.lang.String);
-}
+-processkotlinnullchecks remove
 
 -dontwarn org.xmlpull.v1.**
 -dontwarn org.kxml2.io.**
@@ -107,7 +99,7 @@
 -keep class org.xmlpull.** { *; }
 -keepclassmembers class org.xmlpull.** { *; }
 
-#Glide
+# Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
    **[] $VALUES;

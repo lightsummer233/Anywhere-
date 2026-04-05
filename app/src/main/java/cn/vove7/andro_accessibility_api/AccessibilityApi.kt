@@ -9,6 +9,7 @@ import cn.vove7.andro_accessibility_api.utils.NeedAccessibilityException
 import cn.vove7.andro_accessibility_api.utils.jumpAccessibilityServiceSettings
 import cn.vove7.andro_accessibility_api.utils.whileWaitTime
 import cn.vove7.andro_accessibility_api.viewnode.ViewNode
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
@@ -112,13 +113,14 @@ abstract class AccessibilityApi : AccessibilityService(), BaseServiceApi {
 
   private fun pageIsView(pageName: String): Boolean = try {
     Class.forName(pageName) is View
-  } catch (e: ClassNotFoundException) {
+  } catch (_: ClassNotFoundException) {
     false
   }
 
   /**
    * @param event AccessibilityEvent?
    */
+  @OptIn(DelicateCoroutinesApi::class)
   override fun onAccessibilityEvent(event: AccessibilityEvent?) {
     if (!enableListenAppScope) return
     event ?: return
@@ -146,10 +148,10 @@ abstract class AccessibilityApi : AccessibilityService(), BaseServiceApi {
 
     private fun isEnableGestureService() = ::GESTURE_SERVICE_CLS.isInitialized
 
-    //无障碍基础服务
+    // 无障碍基础服务
     var baseService: AccessibilityApi? = null
 
-    //无障碍高级服务 执行手势等操作
+    // 无障碍高级服务 执行手势等操作
     /**
      * GestureService base on AccessibilityApi
      */

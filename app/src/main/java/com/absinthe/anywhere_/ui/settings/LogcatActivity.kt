@@ -1,6 +1,5 @@
 package com.absinthe.anywhere_.ui.settings
 
-import android.icu.text.DateFormat
 import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.lifecycleScope
@@ -115,7 +114,7 @@ class LogcatActivity : AppBarActivity<ActivityLogcatBinding>() {
             }?.let {
                 lifecycleScope.launch(Dispatchers.IO) {
                     for (logFile in it) {
-                        val date = DateFormat.getDateTimeInstance().format(Date(logFile.lastModified()))
+                        val date = Date(logFile.lastModified()).toLocaleString()
                         val logModel = LogModel().apply {
                             createTime = date
                             filePath = logFile.absolutePath

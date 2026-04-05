@@ -15,15 +15,18 @@ import android.os.Looper
 import android.os.MessageQueue
 import android.os.Parcelable
 import android.os.Process
+import android.text.TextUtils
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import com.absinthe.anywhere_.AnywhereApplication
 import com.absinthe.anywhere_.BuildConfig
 import com.absinthe.anywhere_.R
 import com.absinthe.anywhere_.constants.AnywhereType
 import com.absinthe.anywhere_.constants.Const
 import com.absinthe.anywhere_.constants.GlobalValues
+import com.absinthe.anywhere_.model.Settings
 import com.absinthe.anywhere_.model.database.AnywhereEntity
 import com.absinthe.anywhere_.model.viewholder.AppListBean
 import com.absinthe.anywhere_.model.viewholder.FlowStepBean
@@ -33,8 +36,6 @@ import com.absinthe.anywhere_.utils.handler.URLSchemeHandler
 import com.absinthe.anywhere_.utils.manager.LogRecorder
 import com.absinthe.anywhere_.utils.manager.URLManager
 import com.absinthe.libraries.me.Absinthe
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.Utils
 import com.catchingnow.icebox.sdk_client.IceBox
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
@@ -108,7 +109,7 @@ object AppUtils {
     val apkTempPackageName: String
 
     if (type == AnywhereType.Card.URL_SCHEME) {
-      apkTempPackageName = if (android.text.TextUtils.isEmpty(item.param2)) {
+      apkTempPackageName = if (TextUtils.isEmpty(item.param2)) {
         getPackageNameByScheme(context, item.param1)
       } else {
         item.param2.orEmpty()
@@ -157,15 +158,15 @@ object AppUtils {
         val bean = AppListBean(
           id = packageInfo.packageName,
           packageName = packageInfo.packageName,
-          appName = AppUtils.getAppName(packageInfo.packageName),
+          appName = packageInfo.applicationInfo!!.loadLabel(packageManager).toString(),
           icon = if (GlobalValues.iconPack == Const.DEFAULT_ICON_PACK || GlobalValues.iconPack.isEmpty()) {
             packageInfo.applicationInfo!!.loadIcon(packageManager)
           } else {
-            com.absinthe.anywhere_.model.Settings.iconPack?.getDrawableIconForPackage(
+            Settings.iconPack?.getDrawableIconForPackage(
               packageInfo.packageName,
               packageInfo.applicationInfo!!.loadIcon(packageManager)
             )
-              ?: ContextCompat.getDrawable(Utils.getApp(), R.drawable.ic_logo)!!
+              ?: ContextCompat.getDrawable(AnywhereApplication.instance, R.drawable.ic_logo)!!
           },
           type = -1
         )
@@ -201,9 +202,10 @@ object AppUtils {
    * Restart App
    */
   fun restart() {
-    Utils.getApp().packageManager.getLaunchIntentForPackage(Utils.getApp().packageName)?.let {
+    val context = AnywhereApplication.instance
+    context.packageManager.getLaunchIntentForPackage(context.packageName)?.let {
       it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-      Utils.getApp().startActivity(it)
+      context.startActivity(it)
     }
   }
 
@@ -217,7 +219,7 @@ object AppUtils {
     GlobalValues.sIsDebugMode = true
     val logRecorder = LogRecorder.Builder(context)
       .setLogFolderName(context.getString(R.string.logcat))
-      .setLogFileNameSuffix(AppUtils.getAppName())
+      .setLogFileNameSuffix(context.applicationInfo.loadLabel(context.packageManager).toString())
       .setLogFileSizeLimitation(256)
       .setLogLevel(LogRecorder.DEBUG)
       .setPID(Process.myPid())
@@ -421,7 +423,7 @@ object AppUtils {
   }
 
   fun setTransparentLauncherIcon(flag: Boolean) {
-    val context = Utils.getApp()
+    val context = AnywhereApplication.instance
     val packageManager = context.packageManager
 
     if (flag) {
@@ -453,7 +455,7 @@ object AppUtils {
         } else {
           ae.param2
         }
-        !isActivityExported(Utils.getApp(), ComponentName(ae.param1, clsName.orEmpty()))
+        !isActivityExported(AnywhereApplication.instance, ComponentName(ae.param1, clsName.orEmpty()))
         //Todo app not installed
       }
       AnywhereType.Card.SHELL -> {
@@ -465,7 +467,7 @@ object AppUtils {
       AnywhereType.Card.WORKFLOW -> {
         val flowStepList: List<FlowStepBean>? = try {
           Gson().fromJson(ae.param1, object : TypeToken<List<FlowStepBean>>() {}.type)
-        } catch (e: JsonSyntaxException) {
+        } catch (_: JsonSyntaxException) {
           null
         }
 

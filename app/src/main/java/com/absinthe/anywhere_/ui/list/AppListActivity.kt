@@ -2,7 +2,6 @@ package com.absinthe.anywhere_.ui.list
 
 import android.animation.LayoutTransition
 import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -67,7 +66,7 @@ class AppListActivity : AppBarActivity<ActivityAppListBinding>(), SearchView.OnQ
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.app_list_menu, menu)
 
-    val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+    val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
     val searchView = menu.findItem(R.id.search).actionView as SearchView
     val showSystemApp = menu.findItem(R.id.show_system_app)
     searchView.findViewById<LinearLayout>(androidx.appcompat.R.id.search_bar)?.layoutTransition =

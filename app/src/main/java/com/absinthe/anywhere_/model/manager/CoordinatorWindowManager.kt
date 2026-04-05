@@ -58,6 +58,7 @@ class CoordinatorWindowManager(
       type = if (AppUtils.atLeastO()) {
         WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
       } else {
+        @Suppress("DEPRECATION")
         WindowManager.LayoutParams.TYPE_PHONE
       }
     }

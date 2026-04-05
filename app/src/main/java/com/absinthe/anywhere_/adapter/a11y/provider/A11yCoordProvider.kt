@@ -126,7 +126,7 @@ class A11yCoordProvider : BaseItemProvider<A11yBaseBean>() {
         override fun afterTextChanged(s: Editable?) {
           try {
             item.actionBean.delay = s.toString().toLong()
-          } catch (ignore: Exception) {
+          } catch (_: Exception) {
           }
         }
       })

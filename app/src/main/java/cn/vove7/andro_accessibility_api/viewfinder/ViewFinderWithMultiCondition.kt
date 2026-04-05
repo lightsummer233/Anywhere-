@@ -59,7 +59,7 @@ class ViewFinderWithMultiCondition(node: ViewNode? = null) : ViewFinder(node) {
     depths.forEach {
       try {
         p = p?.childAt(it)
-      } catch (e: ArrayIndexOutOfBoundsException) {
+      } catch (_: ArrayIndexOutOfBoundsException) {
         return null
       }
       if (p == null) {
@@ -193,9 +193,9 @@ class ViewFinderWithMultiCondition(node: ViewNode? = null) : ViewFinder(node) {
      */
     private fun matchTextWithCondition(type: Int, text: String?, ms: List<String>): Boolean {
       if (ms.isEmpty()) return true
-      if (text == null && ms.isNotEmpty()) return false
+      if (text == null) return false
       val matchFunc = matchFunctions[type] ?: return false
-      return ms.any { matchFunc(it, text ?: "") }
+      return ms.any { matchFunc(it, text) }
     }
 
   }

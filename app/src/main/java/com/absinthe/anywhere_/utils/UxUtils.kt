@@ -11,7 +11,6 @@ import android.graphics.PorterDuff
 import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
@@ -24,7 +23,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
 import androidx.palette.graphics.Palette
@@ -107,7 +108,7 @@ object UxUtils {
           context.packageManager.getApplicationIcon(packageName)
         )
       }
-    } catch (e: PackageManager.NameNotFoundException) {
+    } catch (_: PackageManager.NameNotFoundException) {
       null
     }
   }
@@ -115,7 +116,7 @@ object UxUtils {
   fun getEntityIcon(context: Context, entity: AnywhereEntity, size: Int): Drawable =
     try {
       Drawable.createFromStream(
-        context.contentResolver.openInputStream(Uri.parse(entity.iconUri)),
+        context.contentResolver.openInputStream(entity.iconUri.toUri()),
         null
       )
     } catch (e: Exception) {
@@ -184,7 +185,7 @@ object UxUtils {
 
     Glide.with(activity.applicationContext)
       .asBitmap()
-      .load(Uri.parse(backgroundUri))
+      .load(backgroundUri.toUri())
       .into(object : CustomTarget<Bitmap?>() {
         override fun onLoadCleared(placeholder: Drawable?) {}
         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap?>?) {
@@ -356,8 +357,7 @@ object UxUtils {
    * @param darkColor primary color
    */
   fun createLinearGradientBitmap(context: Context, view: ImageView, darkColor: Int) {
-    val bgBitmap =
-      Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
+    val bgBitmap = createBitmap(view.measuredWidth, view.measuredHeight)
     val canvas = Canvas().apply {
       setBitmap(bgBitmap)
       drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)

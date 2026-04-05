@@ -20,6 +20,7 @@ class WorkflowIntentService : JobIntentService() {
 
   private val handler = Handler(Looper.getMainLooper())
 
+  @Deprecated("Deprecated in Java")
   override fun onStart(intent: Intent?, startId: Int) {
     super.onStart(intent, startId)
     NotifyUtils.createWorkflowNotification(this)
@@ -33,7 +34,7 @@ class WorkflowIntentService : JobIntentService() {
     entity?.let { ett ->
       val flowStepList: List<FlowStepBean>? = try {
         Gson().fromJson(ett.param1, object : TypeToken<List<FlowStepBean>>() {}.type)
-      } catch (e: JsonSyntaxException) {
+      } catch (_: JsonSyntaxException) {
         null
       }
 
@@ -43,7 +44,7 @@ class WorkflowIntentService : JobIntentService() {
             val a11yDelay = if (anywhereEntity.type == AnywhereType.Card.ACCESSIBILITY) {
               try {
                 anywhereEntity.param2?.toInt() ?: 0
-              } catch (e: NumberFormatException) {
+              } catch (_: NumberFormatException) {
                 0
               }
             } else {

@@ -32,7 +32,7 @@ class ViewNode(val node: AccessibilityNodeInfo) : ViewOperation, Comparable<View
     private const val ROOT_TAG = "ViewNodeRoot"
 
     fun withChildren(cs: List<ViewNode>): ViewNode {
-      val root = AccessibilityNodeInfo()
+      val root = AccessibilityNodeInfo.obtain()
       root.className = "${ROOT_TAG}[Win Size: ${cs.size}]"
       return ViewNode(root).also {
         it.childrenCache = cs.toTypedArray()
@@ -304,7 +304,7 @@ class ViewNode(val node: AccessibilityNodeInfo) : ViewOperation, Comparable<View
 
   override var isVisibleToUser: Boolean
     get() {
-      return if (className.startsWith(ROOT_TAG) == true) true
+      return if (className.startsWith(ROOT_TAG)) true
       else node.isVisibleToUser
     }
     set(value) {

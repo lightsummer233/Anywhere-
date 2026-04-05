@@ -58,7 +58,7 @@ data class AnywhereEntity(
 
   @SerializedName(ICON_URI)
   @ColumnInfo(name = ICON_URI)
-  var iconUri: String? = "",
+  var iconUri: String = "",
 
   @SerializedName(EXEC_WITH_ROOT)
   @ColumnInfo(name = EXEC_WITH_ROOT)

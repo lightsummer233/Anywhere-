@@ -9,6 +9,7 @@ import com.google.zxing.EncodeHintType
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import java.util.Hashtable
+import androidx.core.graphics.createBitmap
 
 object QRCodeUtil {
   /**
@@ -63,7 +64,7 @@ object QRCodeUtil {
       }
 
       /* 4.创建 Bitmap 对象,根据像素数组设置 Bitmap 每个像素点的颜色值,之后返回 Bitmap 对象 */
-      val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+      val bitmap = createBitmap(width, height)
       bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
       return bitmap
     } catch (e: WriterException) {

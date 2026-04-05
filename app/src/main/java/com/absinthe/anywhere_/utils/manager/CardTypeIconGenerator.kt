@@ -3,9 +3,9 @@ package com.absinthe.anywhere_.utils.manager
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
+import androidx.core.graphics.toColorInt
 import com.absinthe.anywhere_.R
 import com.absinthe.anywhere_.constants.AnywhereType
 
@@ -28,7 +28,7 @@ object CardTypeIconGenerator {
   @SuppressLint("UseCompatLoadingForDrawables")
   fun getAdvancedIcon(context: Context, type: Int, size: Int): Drawable {
     val foreDrawable = context.getDrawable(getIconRes(type))?.apply {
-      setTintList(ColorStateList.valueOf(Color.parseColor("#66FFFFFF")))
+      setTintList(ColorStateList.valueOf("#66FFFFFF".toColorInt()))
     }
     val backDrawable = context.getDrawable(R.drawable.bg_circle)?.apply {
       val colorRes = if (type == AnywhereType.Card.NOT_CARD) {

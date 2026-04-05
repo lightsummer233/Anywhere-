@@ -182,7 +182,7 @@ class SettingsActivity : AppBarActivity<ActivitySettingsBinding>() {
                 data = URLManager.DOCUMENT_PAGE.toUri()
               }
               requireActivity().startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
+            } catch (_: ActivityNotFoundException) {
               ToastUtil.makeText(R.string.toast_no_react_url)
             }
           }

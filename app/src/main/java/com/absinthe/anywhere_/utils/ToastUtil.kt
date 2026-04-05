@@ -98,11 +98,7 @@ object ToastUtil {
           toast = WeakReference(ToastCompat(context, it))
         }.show()
       } else {
-        val ctx = if (context is ContextThemeWrapper) {
-          context
-        } else {
-          contextWrapper
-        }
+        val ctx = context as? ContextThemeWrapper ?: contextWrapper
         val view = ToastView(ctx).also {
           it.message.text = message
         }

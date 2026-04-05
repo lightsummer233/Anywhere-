@@ -19,7 +19,7 @@ object PoliceMan {
 
   @SuppressLint("PrivateApi")
   fun checkPMProxy(application: Application) {
-    val realPMName = "android.content.pm.IPackageManager\$Stub\$Proxy"
+    val realPMName = $$"android.content.pm.IPackageManager$Stub$Proxy"
     var currentPMName = ""
 
     try {

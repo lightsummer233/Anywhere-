@@ -6,7 +6,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Spanned
@@ -14,7 +13,7 @@ import android.view.ContextThemeWrapper
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
+import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import com.absinthe.anywhere_.AnywhereApplication
 import com.absinthe.anywhere_.AwContextWrapper
@@ -334,18 +333,14 @@ object DialogManager {
         return
       }
       Const.SHELL_RESULT_DIALOG -> {
-        val ctx = if (context is ContextThemeWrapper) {
-          context
-        } else {
-          AwContextWrapper(context)
-        }
+        val ctx = context as? ContextThemeWrapper ?: AwContextWrapper(context)
 
         if (ctx is AppCompatActivity) {
           ShellResultBottomSheetDialogFragment().apply {
-            arguments = bundleOf(
-              EXTRA_CONTENT to parsedResult,
-              EXTRA_NEED_FINISH_ACTIVITY to (ctx is ShortcutsActivity)
-            )
+            arguments = Bundle().apply {
+              putString(EXTRA_CONTENT, parsedResult)
+              putBoolean(EXTRA_NEED_FINISH_ACTIVITY, ctx is ShortcutsActivity)
+            }
             show(ctx.supportFragmentManager, tag)
           }
         } else {
@@ -396,7 +391,7 @@ object DialogManager {
       .setNeutralButton("Source Code") { _, _ ->
         runCatching {
           context.startActivity(
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/zhaobozhen/Anywhere-"))
+            Intent(Intent.ACTION_VIEW, "https://github.com/zhaobozhen/Anywhere-".toUri())
           )
         }.onFailure { ToastUtil.Toasty.show(context, R.string.toast_no_react_url) }
         (context as? Activity)?.finish()

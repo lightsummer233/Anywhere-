@@ -4,7 +4,7 @@ import android.view.View
 import androidx.annotation.StringRes
 
 data class AdvancedCardItem(
-  @StringRes val title: Int,
+  @param:StringRes val title: Int,
   val type: Int,
   val listener: View.OnClickListener
 )

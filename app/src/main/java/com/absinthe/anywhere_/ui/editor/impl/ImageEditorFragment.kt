@@ -127,6 +127,7 @@ class ImageEditorFragment : BaseEditorFragment(), OnButtonCheckedListener {
     return true
   }
 
+  @Deprecated("Deprecated in Java")
   override fun onPrepareOptionsMenu(menu: Menu) {
     menu.findItem(R.id.trying_run).isVisible = false
     super.onPrepareOptionsMenu(menu)

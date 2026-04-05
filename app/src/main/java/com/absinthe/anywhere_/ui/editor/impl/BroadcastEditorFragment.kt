@@ -33,7 +33,7 @@ class BroadcastEditorFragment : BaseEditorFragment() {
     item.let {
       val extraBean: ExtraBean? = try {
         Gson().fromJson(it.param1, ExtraBean::class.java)
-      } catch (e: JsonSyntaxException) {
+      } catch (_: JsonSyntaxException) {
         null
       }
 
@@ -48,7 +48,7 @@ class BroadcastEditorFragment : BaseEditorFragment() {
         }
         setOnItemChildClickListener { _, view, position ->
           if (view.id == R.id.ib_delete) {
-            if (data.size > 0 && position < data.size) {
+            if (data.isNotEmpty() && position < data.size) {
               removeAt(position)
             }
           }

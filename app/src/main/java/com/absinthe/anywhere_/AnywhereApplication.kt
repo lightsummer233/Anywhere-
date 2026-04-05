@@ -42,7 +42,7 @@ class AnywhereApplication : Application() {
       HiddenApiBypass.addHiddenApiExemptions("")
     }
 
-    app = this
+    instance = this
     Once.initialise(this)
     Settings.initMMKV(this)
     Settings.init()
@@ -60,6 +60,6 @@ class AnywhereApplication : Application() {
 
   companion object {
     lateinit var sRepository: AnywhereRepository
-    lateinit var app: AnywhereApplication
+    lateinit var instance: AnywhereApplication
   }
 }

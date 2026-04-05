@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Handler
 import android.os.HandlerThread
 import android.provider.BaseColumns
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
+import androidx.core.net.toUri
 import com.absinthe.anywhere_.R
 import com.absinthe.anywhere_.constants.Const
 import com.absinthe.anywhere_.constants.GlobalValues
@@ -170,12 +170,12 @@ class AppRemoteViewsService : RemoteViewsService() {
 
         // 设置要显示的内容
         rv.setTextViewText(R.id.tv_title, content)
-        val icon: Drawable? = if (ae.iconUri.isNullOrEmpty()) {
+        val icon: Drawable? = if (ae.iconUri.isEmpty()) {
           getAppIcon(this@AppRemoteViewsService, ae, ConvertUtils.dp2px(45f))
         } else {
           try {
             Drawable.createFromStream(
-              contentResolver.openInputStream(Uri.parse(ae.iconUri)),
+              contentResolver.openInputStream(ae.iconUri.toUri()),
               null
             )
           } catch (e: Exception) {
@@ -193,7 +193,7 @@ class AppRemoteViewsService : RemoteViewsService() {
         intent.putExtra(Const.INTENT_EXTRA_WIDGET_ENTITY, ae)
         rv.setOnClickFillInIntent(R.id.rl_item, intent)
         return rv
-      } catch (e: Exception) {
+      } catch (_: Exception) {
         return null
       }
     }

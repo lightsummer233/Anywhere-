@@ -1,6 +1,5 @@
 package com.absinthe.anywhere_.ui.editor
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
@@ -117,11 +116,12 @@ class EditorActivity : BaseActivity<ActivityEditorBinding>() {
     setUpBottomDrawer()
   }
 
+  @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
   override fun onBackPressed() {
     if (bottomDrawerBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
       bottomDrawerBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     } else {
-      setResult(Activity.RESULT_OK)
+      setResult(RESULT_OK)
       super.onBackPressed()
     }
   }
@@ -276,8 +276,8 @@ class EditorActivity : BaseActivity<ActivityEditorBinding>() {
     }
 
     binding.navigationView.apply {
-      setNavigationItemSelectedListener {
-        when (it.itemId) {
+      setNavigationItemSelectedListener { menuItem ->
+        when (menuItem.itemId) {
           R.id.add_shortcuts -> {
             if (atLeastNMR1()) {
               if (!GlobalValues.shortcutsList.contains(entity.id)) {
@@ -347,7 +347,7 @@ class EditorActivity : BaseActivity<ActivityEditorBinding>() {
         }
       }
 
-      menu.findItem(R.id.restore_icon)?.isVisible = !entity.iconUri.isNullOrEmpty()
+      menu.findItem(R.id.restore_icon)?.isVisible = entity.iconUri.isNotEmpty()
       menu.findItem(R.id.share_card)?.isVisible =
         entity.type != AnywhereType.Card.IMAGE && entity.type != AnywhereType.Card.FILE
 
@@ -386,7 +386,7 @@ class EditorActivity : BaseActivity<ActivityEditorBinding>() {
       applicationContext.bindService(
         Intent(this, OverlayService::class.java),
         conn,
-        Context.BIND_AUTO_CREATE
+        BIND_AUTO_CREATE
       )
     }
     finish()

@@ -249,11 +249,7 @@ object Opener {
 
   private fun openUrlSchemeEntity(context: Context, item: AnywhereEntity) {
     if (!item.param3.isNullOrEmpty()) {
-      val ctx = if (context is AppCompatActivity) {
-        context
-      } else {
-        ActivityStackManager.topActivity ?: return
-      }
+      val ctx = context as? AppCompatActivity ?: (ActivityStackManager.topActivity ?: return)
       DialogManager.showDynamicParamsDialog(
         ctx,
         item.param3.orEmpty(),
@@ -313,7 +309,7 @@ object Opener {
     ) {
       val extraBean: ExtraBean? = try {
         Gson().fromJson(item.param3, ExtraBean::class.java)
-      } catch (e: JsonSyntaxException) {
+      } catch (_: JsonSyntaxException) {
         null
       }
       val action = if (extraBean == null || extraBean.action.isEmpty()) {
@@ -378,7 +374,7 @@ object Opener {
             TYPE_INT, TYPE_INT_LABEL -> {
               try {
                 extra.value.toInt()
-              } catch (ignore: NumberFormatException) {
+              } catch (_: NumberFormatException) {
                 null
               }?.let { value ->
                 intent.putExtra(extra.key, value)
@@ -387,7 +383,7 @@ object Opener {
             TYPE_LONG, TYPE_LONG_LABEL -> {
               try {
                 extra.value.toLong()
-              } catch (ignore: NumberFormatException) {
+              } catch (_: NumberFormatException) {
                 null
               }?.let { value ->
                 intent.putExtra(extra.key, value)
@@ -396,7 +392,7 @@ object Opener {
             TYPE_FLOAT, TYPE_FLOAT_LABEL -> {
               try {
                 extra.value.toFloat()
-              } catch (ignore: NumberFormatException) {
+              } catch (_: NumberFormatException) {
                 null
               }?.let { value ->
                 intent.putExtra(extra.key, value)
@@ -405,7 +401,7 @@ object Opener {
             TYPE_DOUBLE, TYPE_DOUBLE_LABEL -> {
               try {
                 extra.value.toDouble()
-              } catch (ignore: NumberFormatException) {
+              } catch (_: NumberFormatException) {
                 null
               }?.let { value ->
                 intent.putExtra(extra.key, value)
@@ -437,11 +433,7 @@ object Opener {
   }
 
   private fun openImageEntity(context: Context, item: AnywhereEntity) {
-    val ctx = if (context is AppCompatActivity) {
-      context
-    } else {
-      ActivityStackManager.topActivity ?: return
-    }
+    val ctx = context as? AppCompatActivity ?: (ActivityStackManager.topActivity ?: return)
     Timber.d("ctx: $ctx")
     DialogManager.showImageDialog(
       ctx,
@@ -505,7 +497,7 @@ object Opener {
   private fun openBroadcastEntity(context: Context, item: AnywhereEntity) {
     val extraBean: ExtraBean? = try {
       Gson().fromJson(item.param1, ExtraBean::class.java)
-    } catch (e: JsonSyntaxException) {
+    } catch (_: JsonSyntaxException) {
       null
     }
     extraBean?.let {

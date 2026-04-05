@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.BundleCompat
+import com.absinthe.anywhere_.AnywhereApplication
 import com.absinthe.anywhere_.R
 import com.absinthe.anywhere_.constants.GlobalValues
 import com.absinthe.anywhere_.model.database.AnywhereEntity
@@ -17,7 +18,6 @@ import com.absinthe.anywhere_.utils.UxUtils
 import com.absinthe.anywhere_.view.app.AnywhereDialogBuilder
 import com.absinthe.anywhere_.view.app.AnywhereDialogFragment
 import com.absinthe.anywhere_.viewbuilder.entity.CreateShortcutDialogBuilder
-import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
@@ -47,7 +47,7 @@ class CreateShortcutDialogFragment : AnywhereDialogFragment() {
     mBuilder.apply {
       etName.setText(entity.appName)
       ivIcon.apply {
-        setImageDrawable(UxUtils.getAppIcon(Utils.getApp(), entity, 45.dp))
+        setImageDrawable(UxUtils.getAppIcon(AnywhereApplication.instance, entity, 45.dp))
         setOnClickListener {
           imageResultLauncher.launch("image/*")
         }

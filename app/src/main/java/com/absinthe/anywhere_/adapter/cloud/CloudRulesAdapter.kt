@@ -23,7 +23,7 @@ class CloudRulesAdapter :
   override fun getItemId(position: Int): Long {
     return try {
       data[position].hashCode().toLong()
-    } catch (e: Exception) {
+    } catch (_: Exception) {
       super.getItemId(position)
     }
   }

@@ -70,7 +70,7 @@ class WorkflowEditorFragment  : BaseEditorFragment() {
 
             val extra: List<FlowStepBean>? = try {
                 Gson().fromJson(it.param1, object : TypeToken<List<FlowStepBean>>() {}.type)
-            } catch (e: JsonSyntaxException) {
+            } catch (_: JsonSyntaxException) {
                 null
             }
 

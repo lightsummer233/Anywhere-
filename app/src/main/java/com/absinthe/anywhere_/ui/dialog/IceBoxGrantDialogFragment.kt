@@ -19,7 +19,7 @@ class IceBoxGrantDialogFragment : AnywhereDialogFragment() {
         val intent = Intent(Intent.ACTION_VIEW).apply {
           component = ComponentName(
             "com.android.settings",
-            "com.android.settings.Settings\$ManageApplicationsActivity"
+            $$"com.android.settings.Settings$ManageApplicationsActivity"
           )
         }
         requireActivity().startActivity(intent)

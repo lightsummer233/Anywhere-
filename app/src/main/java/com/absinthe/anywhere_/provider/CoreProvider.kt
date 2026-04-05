@@ -9,6 +9,7 @@ import android.net.Uri
 import com.absinthe.anywhere_.BuildConfig
 import com.absinthe.anywhere_.database.AnywhereDao
 import com.absinthe.anywhere_.database.AnywhereRoomDatabase
+import androidx.core.net.toUri
 
 
 class CoreProvider : ContentProvider() {
@@ -18,7 +19,7 @@ class CoreProvider : ContentProvider() {
     const val AE_TABLE = "anywhere_table"
     const val CODE_AE_DIR = 1
     const val CODE_AE_ITEM = 2
-    val URI_ANYWHERE_ENTITY: Uri = Uri.parse("content://$AUTHORITY/$AE_TABLE")
+    val URI_ANYWHERE_ENTITY: Uri = "content://$AUTHORITY/$AE_TABLE".toUri()
     val MATCHER = UriMatcher(UriMatcher.NO_MATCH)
   }
 

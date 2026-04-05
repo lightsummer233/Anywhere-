@@ -68,6 +68,7 @@ class PageTitleProvider : BaseNodeProvider() {
 
       if (menu is MenuBuilder) {
         val menuBuilder = menu as MenuBuilder
+        @Suppress("UsePropertyAccessSyntax")
         menuBuilder.setOptionalIconsVisible(true)
       }
     }
